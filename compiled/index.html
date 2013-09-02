@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>首页</title>
+  
+    <meta name="author" content="pokerG Hao">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/twitter/stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+ 
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">pokerG</a>
+          <ul class="nav">
+            
+              
+
+
+  <li><a href="/archive">Archive</a></li>
+
+
+            
+              
+
+
+  <li><a href="/tags">Tags</a></li>
+
+
+            
+              
+
+
+  <li><a href="/categories">Categories</a></li>
+
+
+            
+              
+
+
+  <li><a href="/pages">Pages</a></li>
+
+
+            
+              
+
+
+  <li><a href="/about">About Me</a></li>
+
+
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        
+<div class="page-header">
+  <h1>首页 </h1>
+</div>
+
+<div class="row">
+  <div class="span12">
+    
+<h2>Gor已经为你编译完成了</h2>
+<p>
+  这段文字位于pages/index.html ,使用以下命令获取帮助或访问gor官网
+</p>
+<pre><code>gor help</code></pre>
+
+
+<h2>最近更新</h2>
+
+
+<div class="post">
+  <h3 class="title"><a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-pipe/">Go标准库-io-pipe</a> <span class="date">2013-08-28</span></h3>
+
+  <p>&emsp;&emsp;pipe中基本的struct是 pipe</p>
+
+<pre><code>//pipe 是 PipeReader 和 PipeWriter 的底层实现
+type pipe struct {
+    //sync.Mutex 是 一个并发时用的锁，这个以后在sync包中会讲到
+    //rl/wl 控制同时只有一个读取器或写入器
+    rl    sync.Mutex 
+    wl    sync.Mutex 
+    l     sync.Mutex //用于保护其他字段
+    data  []byte     //管道中的数据
+    // r/wwait 控制读取器或写入器等待  
+    rwait sync.Cond  
+    wwait sync.Cond  
+    // r/werr 如果读取器（写入器）关闭，该错误会被Write（Read）方法返回
+    rerr  error      
+    werr  error     
+}
+
+//ErrClosePipe 用于返回对于关闭的管道的操作错误
+var ErrClosedPipe = errors.New(&quot;io: read/write on closed pipe&quot;)
+</code></pre>
+
+
+  <div class="more">
+    <a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-pipe/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-multi/">Go标准库-io-multi</a> <span class="date">2013-08-28</span></h3>
+
+  <pre><code>//接受多个Reader/Writer 
+//返回一个Reader/Writer
+//操作这个Reader/Writer 就相当于操作多个Reader/Writer
+func MultiReader(readers ...Reader) Reader {
+    return &amp;multiReader{readers}
+}
+
+func MultiWriter(writers ...Writer) Writer {
+    return &amp;multiWriter{writers}
+}
+</code></pre>
+
+<p>&emsp;&emsp;multi中定义了两个内部struct，multiReader 和 multiWriter 分别实现了 io.Reader 和 io.Writer</p>
+
+<pre><code>type multiReader struct {
+    readers []Reader
+}
+type multiWriter struct {
+    writers []Writer
+}
+</code></pre>
+
+
+  <div class="more">
+    <a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-multi/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-ioutil/">Go标准库-io-ioutil</a> <span class="date">2013-08-28</span></h3>
+
+  <p>&emsp;&emsp;ioutil封装了一些常用的io操作</p>
+
+<pre><code>//读取r中所有数据
+//返回 读取的数据 和 error
+//读取成功的话 返回nil 而不是 EOF
+//ReadAll 实际上是通过bytes.Buffer的ReadFrom()实现的
+func ReadAll(r io.Reader) ([]byte, error)
+
+//读取文件中的所有数据
+//返回 读取的数据 和 error
+//读取成功的话 返回nil 而不是 EOF
+//ReadFile 和 ReadAll 都是通过readAll()实现的
+//ReadFile会先判断文件的大小，给bytes.Buffer一个预定义容量，避免额外分配内存。
+func ReadFile(filename string) ([]byte, error)
+
+//将 data 写入 文件
+//如果文件不存在，将以perm权限创建文件
+func WriteFile(filename string, data []byte, perm os.FileMode) error
+</code></pre>
+
+
+  <div class="more">
+    <a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-ioutil/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-io/">Go标准库-io-io</a> <span class="date">2013-08-27</span></h3>
+
+  <p>&emsp;&emsp;io包为I/O原语提供了基本的接口。它主要包装了这些原语的已有实现。由于这些接口和原语以不同的实现包装了低级操作，因此除非另行通知，否则客户端不应假定它们对于并行执行是安全的。</p>
+
+<p>&emsp;&emsp;首先我们来看几个variables，这几个variables都是读写操作中可能出现的情况</p>
+
+<pre><code>//ErrShortWrite 用于一个write少于规定的字符数，但是又不能返回一个明确的错误时
+var ErrShortWrite = errors.New(&quot;short write&quot;)
+
+//ErrShortBuffer 用于一个read要求的字符数多于所能提供的字符
+var ErrShortBuffer = errors.New(&quot;short buffer&quot;)
+
+//EOF 就是end-of-file 不用多解释，但是如果EOF发生在一个结构数据流中，error就不应该是EOF
+var EOF = errors.New(&quot;EOF&quot;)
+
+//ErrUnexpectedEOF 意味着EOF发生在读取一个固定数据块或者数据结构的中间
+var ErrUnexpectedEOF = errors.New(&quot;unexpected EOF&quot;)
+
+//ErrNoProgress 发生在多个io.Reader调用Read()方法，却没有返回任何数据或错误时
+//通常作为一个破损的io.Reader实现的标志
+var ErrNoProgress = errors.New(&quot;multiple Read calls return no data or error&quot;)
+</code></pre>
+
+
+  <div class="more">
+    <a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-io/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/Programming Language/interface/">interface</a> <span class="date">2013-08-26</span></h3>
+
+  <blockquote>
+<p>If I could export one feature of Go into other languages, it would be interfaces.
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;———Rob Pike</p>
+
+<p>&emsp;&emsp;interface作为Golang的整个类型系统的基石，让Golang在基础编程哲学的探索上达到前所未有的高度。&gt;&emsp;&emsp;&emsp;&emsp;——《Go语言编程》</p>
+</blockquote>
+
+<p>&emsp;&emsp;接口是Java引入的特性。在软件工程上占有重要地位。而Golang变革了接口的概念。</p>
+
+<p>&emsp;&emsp;我们考虑这样一个情况，有两个struct都实现了一些非常有用的小子集中的相关方法，这时有办法操作两个struct的任意一个就显得非常有用。那么我们该怎么办呢？这就是接口的作用。</p>
+
+<pre><code>type s1 struct{
+    ...//一些属性
+}
+type s2 struct{
+    ...//一些属性
+｝
+func (a *s1)foo(){
+    ...//具体实现1
+}
+func (b *s2)foo(){
+    ...//具体实现2
+｝
+</code></pre>
+
+
+  <div class="more">
+    <a href="/Programming Language/interface/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/Philosophy/%E8%8B%A6%E9%9A%BE/">苦难</a> <span class="date">2013-08-24</span></h3>
+
+  <p>&emsp;&emsp;面对社会悲剧，我们有理想、信念、正义感、崇高感支撑着我们，我们相信自己在精神上无比地优越于那迫害乃至毁灭我们的恶势力，因此我们可以含笑受难，慷慨赴死。我们是舞台上的英雄，哪怕眼前这个剧场里的观众全都浑浑噩噩，是非颠倒，我们仍有勇气把戏演下去，演给我们心目中绝对清醒公正的观众看，我们称这观众为历史、上帝或者良心。</p>
+
+<p>&emsp;&emsp;可是，面对自然悲剧，我们有什么呢？这里没有舞台，只有空漠无际的苍穹。我们不是英雄，只是朝生暮死的众生。任何人间理想都抚慰不了生老病死的悲哀，在天灾人祸面前也谈不上什么正义感。当史前人类遭受大洪水的灭顶之灾时，当庞贝城居民被维苏威火山的岩浆吞没时，他们能有什么慰藉呢？地震,海啸，车祸，空难，瘟疫，绝症&hellip;&hellip;大自然的恶势力轻而易举地把我们或我们的亲人毁灭。我们面对的是没有灵魂的敌手，因而不能以精神的优越自慰，却愈发感到了生命的卑微。没有上帝来拯救我们，因为这灾难正是上帝亲手降下。我们愤怒，但无从泄愤。我们冤屈，但永无申冤之日。我们反抗，但我们的反抗孤立无助，注定失败。</p>
+
+<p>&emsp;&emsp;然而我们未必就因此倒下。也许，没有浪漫气息的悲剧是我们最本质的悲剧，不具有英雄色彩的勇气是我们最真实的勇气。在无可告慰的绝望中，我们咬牙挺住。我们挺立在那里，没有观众，没有证人，也没有期待，没有援军。我们不倒下，仅仅是因为我们不肯让自己倒下。我们以此维护了人的最高的也是最后的尊严————人在神面前的尊严。</p>
+
+<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;————周国平</p>
+
+
+  <div class="more">
+    <a href="/Philosophy/%E8%8B%A6%E9%9A%BE/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/Programming Language/channel%E7%9A%84%E4%B8%A4%E4%B8%AA%E7%89%B9%E6%80%A7/">channel的两个特性</a> <span class="date">2013-08-22</span></h3>
+
+  <p>&emsp;&emsp;channel是Go提供的语言级goroutine间的通信方式。它提供了一种优雅而又强大的，在不使用锁的情况下，从某个goroutine向其他goroutine发送数据流的方式。</p>
+
+<p>&esmp;emsp;这次着重讨论channel的两个重要特性。参考：<a href="http://dave.cheney.net/2013/04/30/curious-channels">http://dave.cheney.net/<sup>2013</sup>&frasl;<sub>04</sub>/30/curious-channels</a></p>
+
+<h2>被关闭的channel不会block</h2>
+
+<p>&esmp;emsp;一个channel一旦被关闭，就不能再向其发送数据，但是仍然可以获取其中的。</p>
+
+<pre><code>package main
+
+import &quot;fmt&quot;
+
+func main() {
+    ch := make(chan bool, 2)
+    ch &lt;- true
+    ch &lt;- true
+    close(ch)
+
+    for i := 0; i &lt; cap(ch) +1 ; i++ {
+            v, ok := &lt;- ch
+            fmt.Println(v, ok)
+    }
+}
+</code></pre>
+
+
+  <div class="more">
+    <a href="/Programming Language/channel%E7%9A%84%E4%B8%A4%E4%B8%AA%E7%89%B9%E6%80%A7/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/Programming Language/Go-Build-in/">Go Build in</a> <span class="date">2013-08-20</span></h3>
+
+  <h2>内置关键字（25个 均为小写）</h2>
+
+<blockquote>
+<p>break&emsp;&emsp;default&emsp;&emsp;func&emsp;&emsp;interface&emsp;&emsp;select<br />
+case&emsp;&emsp;defer&emsp;&emsp;go&emsp;&emsp;map&emsp;&emsp;struct<br />
+chan&emsp;&emsp;else&emsp;&emsp;goto&emsp;&emsp;package&emsp;&emsp;switch<br />
+const&emsp;&emsp;fallthrough&emsp;&emsp;if&emsp;&emsp;range&emsp;&emsp;type<br />
+continue&emsp;&emsp;for&emsp;&emsp; import&emsp;&emsp;return&emsp;&emsp;var <br/></p>
+</blockquote>
+
+<h2>内置类型</h2>
+
+<blockquote>
+<p>值类型：<br />
+bool<br />
+byte<br />
+int(32 or 64), int8, int16, int32, int64<br />
+uint(32 or 64), uint8(byte), uint16, uint32, uint64<br />
+float32, float64<br />
+string<br />
+complex64, complex128   &ndash;复数<br />
+array    &ndash; 固定长度的数组<br /></p>
+</blockquote>
+
+
+  <div class="more">
+    <a href="/Programming Language/Go-Build-in/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/Programming Language/Go%E8%AF%AD%E8%A8%80%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC/">Go语言代码风格</a> <span class="date">2013-08-19</span></h3>
+
+  <blockquote>
+<p>&emsp;&emsp;代码必须是本着写给人阅读的原则来编写，只不过顺便给机器执行而已。</p>
+
+<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&mdash;《计算机程序设计与解释》</p>
+</blockquote>
+
+<p>&emsp;&emsp;对于程序员来说，代码风格的重要性自然是不必多说的，我曾经买过一本《Java编程风格》，我们想想光是代码风格就要写成一本书，是多么让人头疼。而Go语言很有可能是第一个将代码风格强制统一的语言。一些在其他语言中编译器可以通过的问题，在Go编译器中会被认为是编译错误。由于刚好Go语言强制规定的代码形式都是我常用的，也是我很喜欢的，所以非常幸运啊。。（这也是我喜欢Go语言的一个重要原因）。</p>
+
+<p>&emsp;&emsp;Go语言关于编码规范的问题，主要分为两类，一是：由编译器进行的强制代码规范；二是：由go fmt 格式化的非强制性编码风格。</p>
+
+<p>&emsp;&emsp;Go语言的强制代码规范是Go设计者认为最需要统一的风格。首先，就是命名，Go语言对于可见性的规则不像C语言用 private public 等关键字来声明可见性，而是规定暴露于外部的名字用大写开头，不需要暴露的用小写字母开头。目前比较流行的命名法有两种：骆驼命名法 和 下划线法。Go语言明确宣告支持骆驼命名法，排斥下划线法。虽然以前写C语言都用的是下划线法，但是后来用php，js，python什么的用的是都是骆驼命名法，而且骆驼命名法打起来明显比下划线法方便，所以也是很喜欢。</p>
+
+<p>&emsp;&emsp;还有就是关于花括号的问题。最初的风格为K&amp;R，后来又有了MS风格，可能因为Go语言的设计者有Ken Thompson，所以，，我们还是使用他所创的那种风格吧。而且我觉得这样写代码更加紧凑，而且清晰度也很高。</p>
+
+<p>&emsp;&emsp;另外Go工具链中还有个go fmt用来格式化代码。它可以调整语句的位置，重新摆放花括号的位置，以制表符来缩进，添加空格等等。</p>
+
+<p>&emsp;&emsp;总的来说，Go语言的代码规范可以算是集C语言出世这几十年来的思想之大成，优雅，规范，非常对我胃口</p>
+
+
+  <div class="more">
+    <a href="/Programming Language/Go%E8%AF%AD%E8%A8%80%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/Philosophy/%E9%9D%A9%E5%91%BD/">革命</a> <span class="date">2013-08-16</span></h3>
+
+  <blockquote>
+<p>&emsp;&emsp;&emsp;&emsp;&emsp;加缪的《反抗者》写的很精彩，周国平的点评也很精彩，我忍不住想把它摘录下来</p>
+</blockquote>
+
+<p>&emsp;&emsp;“反抗”在本质上是肯定的，反抗者总是为了捍卫某种价值才说“不”的，他要捍卫的这种价值并不属于个人，而是被视为人性的普遍价值。因此，反抗使个人摆脱孤独。“我反抗，故我们存在”这是反抗的意义所在。但其中也隐含着危险，便是把所要捍卫的价值绝对化。其表现之一，就是以历史的名义进行的反抗，即革命。</p>
+
+<p>&emsp;&emsp;对卢梭的《社会契约论》的批判是《反抗者》中的精彩篇章。加缪一针见血地指出，卢梭的 这部为法国革命奠基的著作是新福音书，新宗教，新神学。革命的特点是要在历史中实现某 种绝对价值，并且声称这种价值的实现就是人类的最终统一和历史的最终完成。这一现代革命概念肇始于法国革命。革命所要实现的那个绝对价值必定是抽象的，至高无上的，在卢梭 那里，它就是与每个人的意志相分离的&rdquo;总体意志&rdquo;。&rdquo;总体意志&rdquo;被宣布为神圣的普遍理 性的体现，因而作为这&rdquo;总体意志&rdquo;之载体的抽象的&rdquo;人民&rdquo;也就成了新的上帝。圣·鞠斯 特进而赋予&rdquo;总体意志&rdquo;以道德含义，并据此把&rdquo;任何在细节上反对共和国&rdquo;亦即触犯&rdquo;总 体意志&rdquo;的行为都宣判为罪恶，从而大开杀戒，用断头台来担保品德的纯洁。浓烈的道德化 色彩也正是现代革命的特点之一，正如加缪所说：&rdquo;法国革命要把历史建立在绝对纯洁的原 则上，开创了形式道德的新纪元。&rdquo;而形式道德是要吃人的，它导致了无限镇压原则。它对 心理的威慑力量甚至使无辜的受害者自觉有罪。我们由此而可明白，圣·鞠斯特本人后来从 被捕到处死为何始终保持着沉默，斯大林时期冤案中的那些被告又为何几乎是满怀热情地给 判处他们死刑的法庭以配合。在这里起作用的已经不是法律，而是神学。既然是神圣的&rdquo;人 民&rdquo;在审判，受审者已被置于与&rdquo;人民&rdquo;相对立的位置上，因而在总体上是有罪的，细节就完全不重要了。</p>
+
+<p>&emsp;&emsp;革命者自命对于历史负有使命，要献身于历史的终极目标。可是他们是从哪里获知这个终极目标的呢？雅斯贝尔斯指出：人处于历史中，所以不可能把握作为整体的历史。加缪引证了这一见解，进一步指出：因此，任何历史举动都是冒险，无权为任何绝对立场辩护。绝对的理性主义就如同绝对的虚无主义一样，也会把人类引向荒漠。</p>
+
+
+  <div class="more">
+    <a href="/Philosophy/%E9%9D%A9%E5%91%BD/" class="btn">read more..</a>
+  </div>
+</div>
+
+  </div>
+</div>
+
+      </div>
+
+      <footer>
+        <p>&copy; pokerG Hao 2013 
+          with help from <a href="http://github.com/wendal/gor" target="_blank" title="Gor -- Fast Blog">Gor</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+		  and Idea from <a href="http://ruhoh.com" target="_blank" title="The Definitive Technical Blogging Framework">ruhoh</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  var pluginUrl = '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-123-12']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+  </body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>初识Go语言[1]</title>
+  
+    <meta name="author" content="pokerG Hao">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/twitter/stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+ 
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">pokerG</a>
+          <ul class="nav">
+            
+              
+
+
+  <li><a href="/archive">Archive</a></li>
+
+
+            
+              
+
+
+  <li><a href="/tags">Tags</a></li>
+
+
+            
+              
+
+
+  <li><a href="/categories">Categories</a></li>
+
+
+            
+              
+
+
+  <li><a href="/pages">Pages</a></li>
+
+
+            
+              
+
+
+  <li><a href="/about">About Me</a></li>
+
+
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <div class="page-header">
+  <h1>初识Go语言[1]  <small>我对Go语言语法的一些看法</small></h1>
+</div>
+
+<div class="row">
+  <div class="span8">
+    <p>&emsp;作为一个刚接触Go没几天的Gopher,没什么能力对其原理和高级用法做出分析和评价，姑且就对其语法形式谈谈我的看法，也算是对我这几天来的一个总结和回顾，姑妄言之，大家莫怪。</p>
+
+<h2>变量的声明</h2>
+
+<p>&emsp;首先最基本的声明方式     <code>var a,b int</code>
+和C语言相比 仅仅是把 类型 和 变量名称的顺序调换，但是我认为这样看起来比C语言可读性更高，而且var的引入使注意力更加集中（可能是前段时间php，js，python什么的看多了吧)</p>
+
+<p>&emsp;再者 <code>a,b := 1,2</code> 这种声明方式确实让我耳目一新，Go语言是类型安全的，但是这种写法让我有了动态语言的感觉，使用起来很方便，也很舒服。</p>
+
+<h2>类型</h2>
+
+<p>&emsp;Go与C相比类型多了很多，complex,error,map,interface,chan 等等，其中最让我感兴趣的是map 和 interface（chan 是并发的内容，暂不考虑), interface 一会专门讲，我们先谈谈map，php等语言的数组就具有map类似的功能，Go的map使用起来也很方便，赋值，删除，查找做的非常简单和精巧。</p>
+
+<p>&emsp;slice看起来很像指向数组的指针，但还有些许不同，它还有元素个数和分配的空间两个“属性”，slice和数组很容易让人联想到STL里的vector和数组的关系，slice的动态扩展空间的能力和各种管理功能很好很强大。</p>
+
+<h2>流程控制</h2>
+
+<p>&emsp;Go语言的流程控制语句少了小括号，现在很多语言都去掉了这个，让我们可以少打很多字</p>
+
+<p>&emsp;switch语句默认加了break，这个确实让我很兴奋，不用再担心少写break而出现bug</p>
+
+<p>&emsp;Go语言的循环语言只有for关键字（确实这是最常用的，C语言中我也很少用while和do-while），Go中for的形式非常灵活，功能也很完善。</p>
+
+<p>&emsp;goto被许许多多的人所诟病，但是对于Go这样一个仅有25个关键字的语言来说，仍然支持goto关键字，说明goto在某些场合下确实是很合适的。（linux内核中goto出现的频率之高！！！）。break和continue 可以带标签，着实让我感慨，真是为程序员考虑啊。以后再也不用为多重循环的跳转头疼了。</p>
+
+<h2>函数</h2>
+
+<p>&emsp;Go语言函数的关键字，让我看着不太爽，func感觉像是被剪掉尾巴的孔雀，缩写的太难看，要不function 要不 fn 多好。</p>
+
+<p>&emsp;因为Go的函数是多返回值的，所以它的函数头，返回值位于后头，这样写也挺好 <code>func add(a , b int)(ret int,err error)｛｝</code></p>
+
+<p>&emsp;Go函数可以有多个返回值，这个是迄今为止Go语言与其他语言最大的不同，结合上Go语言的多重赋值，Go语言的代码会很简洁、优雅。</p>
+
+<p>######结尾</p>
+
+<p>&emsp;今天我们就先谈论到这，明天我们说说Go语言的interface，error，和 OOP特性。</p>
+
+<p>[返回顶部]()</p>
+
+    <hr>
+    <div class="pagination">
+      <ul>
+        <ul>
+          
+            <li class="prev"><a href="/Philosophy/%E4%B8%AD%E8%9B%8A%E8%80%85/" title="中蛊者">&larr; Previous</a></li>
+          
+          
+
+            <li><a href="/archive">Archive</a></li>
+
+          
+            <li class="next"><a href="/ACM/HOJ-2654--Printer-Queue/" title="HOJ 2654  Printer Queue">Next &rarr;</a></li>
+          
+          
+        </ul>
+      </ul>
+    </div>
+    <hr>
+    
+<div id="disqus_thread"></div>
+<script>
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  </div>
+  
+  <div class="span4">
+    <h4>Published</h4>
+    <div class="date"><span>2013-08-13</span></div>
+    <br>
+    <h4>Categories</h4>
+    <ul class="tag_box">
+    
+      <li>
+  <a href="/categories/#Programming-Language-ref">Programming Language <span>10</span></a>
+</li>
+    
+    </ul>
+    <br>
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    
+      <li>
+  <a href="/tags/#Go-ref">Go <span>10</span></a>
+</li>
+    
+    </ul>
+  </div>
+</div>
+
+      </div>
+
+      <footer>
+        <p>&copy; pokerG Hao 2013 
+          with help from <a href="http://github.com/wendal/gor" target="_blank" title="Gor -- Fast Blog">Gor</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+		  and Idea from <a href="http://ruhoh.com" target="_blank" title="The Definitive Technical Blogging Framework">ruhoh</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  var pluginUrl = '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-123-12']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+  </body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>转： HOJ 1016 Joseph&#39;s problem I</title>
+  
+    <meta name="author" content="pokerG Hao">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/twitter/stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+ 
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">pokerG</a>
+          <ul class="nav">
+            
+              
+
+
+  <li><a href="/archive">Archive</a></li>
+
+
+            
+              
+
+
+  <li><a href="/tags">Tags</a></li>
+
+
+            
+              
+
+
+  <li><a href="/categories">Categories</a></li>
+
+
+            
+              
+
+
+  <li><a href="/pages">Pages</a></li>
+
+
+            
+              
+
+
+  <li><a href="/about">About Me</a></li>
+
+
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <div class="page-header">
+  <h1>转： HOJ 1016 Joseph&#39;s problem I  <small>&#34;&#34;</small></h1>
+</div>
+
+<div class="row">
+  <div class="span8">
+    <p><div style="">
+    <div id="sina_keyword_ad_area2" style="line-height:25px">
+        <div style="line-height:25px">
+            先说说经典的Joseph问题吧，说有n个要被处决的人（编号0~(n-1))，从0开始报数，报到(m-1)的会被杀掉，剩下的人继续从0开始报数，如此下去最后剩的一个人会存活下来。说Joseph发现了这个规律而且把他透露了出来，现在假如你在这n个人里面，你会选择几号位置站下。
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　很显然你会选择能活下来的那个位置，所以问题就是如何得到这个位置。
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　首先想到的是模拟(至少我笨脑子是这么想的)，但无论是用链表还是用数组这个时间复杂度都是比较高的，至少交题的时候会TLE，这里介绍一种线性时间的解法，出自大师Knuth的哦。
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　考虑下第一次杀人的时候，编号为k = (m - 1) % n的同学挂了，那我们从k + 1重新从0开始编号
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　k + 1 ==&gt; 0
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　k + 2 ==&gt; 1
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　……
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　……
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　k - 2 ==&gt; n - 2
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　k - 1 ==&gt; n - 1
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　好了，剩余的n - 1个同学又组成了一个新的Joseph环，对新环来说，编号k = (m - 1) % (n - 1)的同学会挂，如此下去，这里面似乎有某种规律可寻。
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　考虑到不会死的同学一直不会被杀(废话)，我们设i个同学时的不会挂的同学的编号(即解)为x，那么当死掉一个同学剩余i - 1个同学的时候，x仍然不会被杀，但此时的x已经由编号变换变成了x’，即x’是i - 1的情况时的解！一直推下去直到i - (i - 1)即1的情况，那1的时候解明显是0嘛！(注意编号是从0开始的)，倒推回来，那问题不就解决了么！
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　好了，分析清楚了剩下的就只是数学推导了，这个我比较烦，直接给公式吧：
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　向下变换：x’ = (x - (k + 1)) % i;
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　向上变换：x = (x + k + 1) % i;
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　其中：　　k = (m - 1) % i;
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　带入可得：x = (x’ + m) % i;
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　OK，现在应该很好写代码了：
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">　　
+                <code style="line-height:25px"><span style="font-family:新宋体; line-height:25px">int Joseph(int n,int m)<br style="line-height:25px" />
+                　　{<br style="line-height:25px" />
+                &nbsp;<wbr style="line-height:25px">&nbsp;<wbr style="line-height:25px">&nbsp;<wbr style="line-height:25px"><span>&nbsp;</span>　　int i,result;<br style="line-height:25px" />
+                &nbsp;<wbr style="line-height:25px">&nbsp;<wbr style="line-height:25px"><br style="line-height:25px" />
+                &nbsp;<wbr style="line-height:25px">&nbsp;<wbr style="line-height:25px">&nbsp;<wbr style="line-height:25px"><span>&nbsp;</span>　　for (i = 1,result = 0;i &lt; n;i++)<br style="line-height:25px" />
+                &nbsp;<wbr style="line-height:25px">&nbsp;<wbr style="line-height:25px">&nbsp;<wbr style="line-height:25px">&nbsp;<wbr style="line-height:25px">&nbsp;<wbr style="line-height:25px">&nbsp;<wbr style="line-height:25px">&nbsp;<wbr style="line-height:25px"><span>&nbsp;</span>　　result = (result + m) % i;<br style="line-height:25px" />
+                &nbsp;<wbr style="line-height:25px">&nbsp;<wbr style="line-height:25px">&nbsp;<wbr style="line-height:25px"><span>&nbsp;</span>　　return result;<br style="line-height:25px" />
+                　　}</wbr></wbr></wbr></wbr></wbr></wbr></wbr></wbr></wbr></wbr></wbr></wbr></wbr></wbr></wbr></wbr></wbr></wbr></span></code>
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　现在再来看看HOJ上的两道Joseph问题，有了上面的基础，只要做个脑筋急转弯就行了。
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　先看第一道(1016)，说Joseph把杀人的秘密传出来之后，很多聪明的或者还不够聪明的程序员都能够选择合适的位置使自己存活下来，但 Joseph的表兄，一个恶毒的一直致力于将世界上所有愚蠢的程序员杀光光的人，又发明出一种新的玩法来杀人，如果你又很不幸的站在了这n个人里面，你会选择哪个位置站下。
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　Joseph表兄的新玩法的特点是m是不再是给定的一个确定的数值，而且是按照素数从小到大变动的，即取值依次为{2, 3, 5, 7, ……}。
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　当然你仍然选择不会挂的位置站下。
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　题目已经说得很清楚了，不难想到我们只要在递推的过程中更新m的值就行了，m属于素数的集合，所以我们只要开个数组保存有用的素数，然后使m在其中取值就行了。
+            </p>
+            <p style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px 0px 10px; line-height:25px; padding-right:0px">
+                　　还有一点值得注意的是由于第1次杀人的时候取的值是prime[0]，第2次是prime[1]，……第n次是prime[n-1]，所以往回推的时候第1次取的应该是prime[n-1]，第2次是prime[n-2]，……则第i次应该是prime[n-i]。
+            </p>
+        </div>
+    </div>
+</div>
+<br /></p>
+
+<p><pre class="cpp" name="code">#include &lt;iostream&gt;</p>
+
+<p>const int SIZE = 3502;
+int prime[SIZE];
+int result[SIZE];
+int isprime(int n)
+{
+    for (int i=3 ;i*i&lt;=n;i+=2)
+    {
+        if (n%i==0)
+            return 0;
+    }
+    return 1;
+}
+int main()
+{
+    int prime[SIZE];
+    int result[SIZE];
+    int i,j;</p>
+
+<pre><code>for(i = 3,j = 1,prime[0] = 2;j &amp;lt; SIZE;i += 2)
+    if(isprime(i))
+        prime[j++] = i;
+for(i = 1;i &amp;lt; SIZE;i++)
+    for(j = 1,result[i] = 0;j &amp;lt;= i;j++)
+        result[i] = (result[i] + prime[i-j]) % j;
+while(scanf(&amp;quot;%d&amp;quot;,&amp;amp;i) == 1 &amp;amp;&amp;amp; i)
+{
+    printf(&amp;quot;%d\n&amp;quot;,result[i] + 1);
+}
+return 0;
+</code></pre>
+
+<p>}
+</pre>
+<br /></p>
+
+    <hr>
+    <div class="pagination">
+      <ul>
+        <ul>
+          
+            <li class="prev"><a href="/ACM/HOJ-1019-Grandpa%27s-Other-Estate/" title="HOJ 1019 Grandpa&#39;s Other Estate">&larr; Previous</a></li>
+          
+          
+
+            <li><a href="/archive">Archive</a></li>
+
+          
+            <li class="next"><a href="/ACM/HOJ-1015--Nearly-prime-numbers/" title="HOJ 1015  Nearly prime numbers">Next &rarr;</a></li>
+          
+          
+        </ul>
+      </ul>
+    </div>
+    <hr>
+    
+<div id="disqus_thread"></div>
+<script>
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  </div>
+  
+  <div class="span4">
+    <h4>Published</h4>
+    <div class="date"><span>2013-03-28</span></div>
+    <br>
+    <h4>Categories</h4>
+    <ul class="tag_box">
+    
+      <li>
+  <a href="/categories/#ACM-ref">ACM <span>9</span></a>
+</li>
+    
+    </ul>
+    <br>
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    
+      <li>
+  <a href="/tags/#%E6%A8%A1%E6%8B%9F-ref">模拟 <span>3</span></a>
+</li>
+    
+    </ul>
+  </div>
+</div>
+
+      </div>
+
+      <footer>
+        <p>&copy; pokerG Hao 2013 
+          with help from <a href="http://github.com/wendal/gor" target="_blank" title="Gor -- Fast Blog">Gor</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+		  and Idea from <a href="http://ruhoh.com" target="_blank" title="The Definitive Technical Blogging Framework">ruhoh</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  var pluginUrl = '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-123-12']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+  </body>
+</html>

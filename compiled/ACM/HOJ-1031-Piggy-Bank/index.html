@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>HOJ 1031 Piggy-Bank</title>
+  
+    <meta name="author" content="pokerG Hao">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/twitter/stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+ 
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">pokerG</a>
+          <ul class="nav">
+            
+              
+
+
+  <li><a href="/archive">Archive</a></li>
+
+
+            
+              
+
+
+  <li><a href="/tags">Tags</a></li>
+
+
+            
+              
+
+
+  <li><a href="/categories">Categories</a></li>
+
+
+            
+              
+
+
+  <li><a href="/pages">Pages</a></li>
+
+
+            
+              
+
+
+  <li><a href="/about">About Me</a></li>
+
+
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <div class="page-header">
+  <h1>HOJ 1031 Piggy-Bank  <small>&#34;&#34;</small></h1>
+</div>
+
+<div class="row">
+  <div class="span8">
+    <p style="margin-top:0px; margin-bottom:5px; padding-top:0px; padding-bottom:0px; line-height:20px; font-size:14px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; background-color:rgb(247,247,247)">
+	Before ACM can do anything, a&nbsp;budget must be prepared and the necessary financial support obtained. The main income for this action comes from Irreversibly Bound Money (IBM). The idea behind is simple. Whenever some ACM member has any small money, he takes all the coins and throws them into a piggy-bank. You know that this process is irreversible, the coins cannot be removed without breaking the pig. After a sufficiently long time, there should be enough cash in the piggy-bank to pay everything that needs to be paid.
+</p>
+<p style="margin-top:0px; margin-bottom:5px; padding-top:0px; padding-bottom:0px; line-height:20px; font-size:14px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; background-color:rgb(247,247,247)">
+	But there is a big problem with piggy-banks. It is not possible to determine how much money is inside. So we might break the pig into pieces only to find out that there is not enough money. Clearly, we want to avoid this unpleasant situation. The only possibility is to weigh the piggy-bank and try to guess how many coins are inside. Assume that we are able to determine the weight of the pig exactly and that we know the weights of all coins of a given currency. Then there is some minimum amount of money in the piggy-bank that we can guarantee. Your task is to find out this worst case and determine the minimum amount of cash inside the piggy-bank. We need your help. No more prematurely broken pigs!
+</p>
+<span style="margin:0px; padding:0px; font-size:18px; line-height:28px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; background-color:rgb(247,247,247)">Input Specification</span><span style="color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:16px; line-height:20px; background-color:rgb(247,247,247)"></span>
+<p style="margin-top:0px; margin-bottom:5px; padding-top:0px; padding-bottom:0px; line-height:20px; font-size:14px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; background-color:rgb(247,247,247)">
+	The input consists of&nbsp;<var style="margin:0px; padding:0px">T</var>&nbsp;test cases. The number of them (<var style="margin:0px; padding:0px">T</var>) is given on the first line of the input file. Each test case begins with a line containing two integers&nbsp;<var style="margin:0px; padding:0px">E</var>&nbsp;and&nbsp;<var style="margin:0px; padding:0px">F</var>. They indicate the weight of an empty pig and of the pig filled with coins. Both weights are given in grams. No pig will weigh more than 10 kg, that means&nbsp;<var style="margin:0px; padding:0px">1 &lt;= E &lt;= F &lt;= 10000</var>. On the second line of each test case, there is an integer number&nbsp;<var style="margin:0px; padding:0px">N</var>&nbsp;(<var style="margin:0px; padding:0px">1 &lt;= N &lt;= 500</var>) that gives the number of various coins used in the given currency. Following this are exactly&nbsp;<var style="margin:0px; padding:0px">N</var>&nbsp;lines, each specifying one coin type. These lines contain two integers each,&nbsp;<var style="margin:0px; padding:0px">P</var>and&nbsp;<var style="margin:0px; padding:0px">W</var>&nbsp;(<var style="margin:0px; padding:0px">1 &lt;= P &lt;= 50000</var>,&nbsp;<var style="margin:0px; padding:0px">1 &lt;= W &lt;=10000</var>).&nbsp;<var style="margin:0px; padding:0px">P</var>&nbsp;is the value of the coin in monetary units,&nbsp;<var style="margin:0px; padding:0px">W</var>&nbsp;is it's weight in grams.
+</p>
+<span style="margin:0px; padding:0px; font-size:18px; line-height:28px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; background-color:rgb(247,247,247)">Output Specification</span><span style="color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:16px; line-height:20px; background-color:rgb(247,247,247)"></span>
+<p style="margin-top:0px; margin-bottom:5px; padding-top:0px; padding-bottom:0px; line-height:20px; font-size:14px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; background-color:rgb(247,247,247)">
+	Print exactly one line of output for each test case. The line must contain the&nbsp;sentence &quot;<code style="margin:0px; padding:0px">The minimum amount of money in the piggy-bank is&nbsp;<var style="margin:0px; padding:0px">X</var>.</code>&nbsp;where&nbsp;<var style="margin:0px; padding:0px">X</var>&nbsp;is the minimum amount of money that can be achieved using coins with the given total weight. If the weight cannot be reached exactly, print a&nbsp;line &quot;<code style="margin:0px; padding:0px">This is impossible.</code>.
+</p>
+<span style="margin:0px; padding:0px; font-size:18px; line-height:28px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; background-color:rgb(247,247,247)">Sample Input:</span>
+<pre style="margin-top:0px; margin-bottom:0px; padding:5px; background-color:rgb(224,224,224); font-size:14px; line-height:16px; overflow:auto; font-family:Consolas,'Lucida Console','Andale Mono','Bitstream Vera Sans Mono','Courier New',Courier; color:rgb(51,51,51)">3
+10 110
+2
+1 1
+30 50
+10 110
+2
+1 1
+50 30
+1 6
+2
+10 3
+20 4
+</pre>
+<span style="margin:0px; padding:0px; font-size:18px; line-height:28px; color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; background-color:rgb(247,247,247)">Sample Output:</span>
+<pre style="margin-top:0px; margin-bottom:0px; padding:5px; background-color:rgb(224,224,224); font-size:14px; line-height:16px; overflow:auto; font-family:Consolas,'Lucida Console','Andale Mono','Bitstream Vera Sans Mono','Courier New',Courier; color:rgb(51,51,51)">The minimum amount of money in the piggy-bank is 60.
+The minimum amount of money in the piggy-bank is 100.
+This is impossible.</pre>
+<p>
+	<span style="font-size:24px"><br />
+	</span>
+</p>
+<p>
+	<span style="font-size:24px">题解：</span>
+</p>
+<p>
+	<span style="font-size:24px">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span style="font-size:18px">完全背包问题,可以看看《背包问题九讲》</span>
+</p>
+<p>
+	<span style="font-size:18px"></span>
+</p>
+<pre name="code" class="cpp">#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;cstring&gt;
+const int N = 505;
+const int inf = 1000000000;
+int w[N],p[N];
+int dp[10005];
+int main(){
+	int cases,e,f,n;
+	scanf(&quot;%d&quot;,&amp;cases);
+	while(cases --){
+		
+		scanf(&quot;%d%d&quot;,&amp;e,&amp;f);
+		for(int i = 1; i &lt;= f; i ++)
+		   dp[i] = inf;
+        dp[0] = 0;
+		f -= e;
+		scanf(&quot;%d&quot;,&amp;n);
+		for(int i = 1; i &lt;= n; i++)
+			scanf(&quot;%d%d&quot;,&amp;p[i],&amp;w[i]);
+		for(int i = 1; i &lt;= n ; i++)
+			for(int j = w[i]; j &lt;= f; j++)
+				if(dp[j - w[i]] + p[i] &lt; dp[j]) dp[j] = dp[j - w[i]] + p[i];
+		if(dp[f] == inf) 
+		    printf(&quot;This is impossible.\n&quot;);
+		else
+		    printf(&quot;The minimum amount of money in the piggy-bank is %d.\n&quot;,dp[f]);	        
+	}
+    return 0;
+}	
+		
+</pre>
+<br />
+<br />
+
+<p>
+</p>
+<p>
+	<br />
+	
+</p>
+
+    <hr>
+    <div class="pagination">
+      <ul>
+        <ul>
+          
+            <li class="prev"><a href="/ACM/HOJ-2033-Ubiquitous-Religions/" title="HOJ 2033 Ubiquitous Religions">&larr; Previous</a></li>
+          
+          
+
+            <li><a href="/archive">Archive</a></li>
+
+          
+            <li class="next"><a href="/ACM/HOJ-2196-Job-Scheduling-by-Open-Bidding/" title="HOJ 2196 Job Scheduling by Open Bidding">Next &rarr;</a></li>
+          
+          
+        </ul>
+      </ul>
+    </div>
+    <hr>
+    
+<div id="disqus_thread"></div>
+<script>
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  </div>
+  
+  <div class="span4">
+    <h4>Published</h4>
+    <div class="date"><span>2013-04-09</span></div>
+    <br>
+    <h4>Categories</h4>
+    <ul class="tag_box">
+    
+      <li>
+  <a href="/categories/#ACM-ref">ACM <span>9</span></a>
+</li>
+    
+    </ul>
+    <br>
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    
+      <li>
+  <a href="/tags/#DP-ref">DP <span>2</span></a>
+</li>
+    
+    </ul>
+  </div>
+</div>
+
+      </div>
+
+      <footer>
+        <p>&copy; pokerG Hao 2013 
+          with help from <a href="http://github.com/wendal/gor" target="_blank" title="Gor -- Fast Blog">Gor</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+		  and Idea from <a href="http://ruhoh.com" target="_blank" title="The Definitive Technical Blogging Framework">ruhoh</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  var pluginUrl = '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-123-12']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+  </body>
+</html>

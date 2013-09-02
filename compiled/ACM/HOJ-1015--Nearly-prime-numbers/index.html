@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>HOJ 1015  Nearly prime numbers</title>
+  
+    <meta name="author" content="pokerG Hao">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/twitter/stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+ 
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">pokerG</a>
+          <ul class="nav">
+            
+              
+
+
+  <li><a href="/archive">Archive</a></li>
+
+
+            
+              
+
+
+  <li><a href="/tags">Tags</a></li>
+
+
+            
+              
+
+
+  <li><a href="/categories">Categories</a></li>
+
+
+            
+              
+
+
+  <li><a href="/pages">Pages</a></li>
+
+
+            
+              
+
+
+  <li><a href="/about">About Me</a></li>
+
+
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <div class="page-header">
+  <h1>HOJ 1015  Nearly prime numbers  <small>&#34;&#34;</small></h1>
+</div>
+
+<div class="row">
+  <div class="span8">
+    <p style="">
+	Nearly prime number is an integer positive number for which it is possible to find such primes<span>&nbsp;</span><span style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px; padding-right:0px">P<sub style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px; padding-right:0px">1</sub></span><span>&nbsp;</span>and<span>&nbsp;</span><span style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px; padding-right:0px">P<sub style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px; padding-right:0px">2</sub></span><span>&nbsp;</span>that given number is equal to<span style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px; padding-right:0px">P<sub style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px; padding-right:0px">1</sub>*P<sub style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px; padding-right:0px">2</sub></span>. There is given a sequence on<span>&nbsp;</span><span style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px; padding-right:0px">N</span><span>&nbsp;</span>integer positive numbers, you are to write a program that prints Yes if given number is nearly prime and No otherwise.
+</p>
+Input<span style=""></span>
+<p style="">
+	Input consists of<span>&nbsp;</span><span style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px; padding-right:0px">N+</span>1 numbers. First is positive integer<span>&nbsp;</span><span style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px; padding-right:0px">N (1&lt;=N&lt;=50000)</span>. Next<span>&nbsp;</span><span style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px; padding-right:0px">N</span><span>&nbsp;</span>numbers followed by<span>&nbsp;</span><span style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px; padding-right:0px">N</span>. Each number is not greater than<span>&nbsp;</span><span style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px; padding-right:0px">10<sup style="padding-bottom:0px; padding-top:0px; padding-left:0px; margin:0px; padding-right:0px">9</sup></span>. All numbers separated by whitespace(s).
+</p>
+Output<span style=""></span>
+<p style="">
+	Write a line in output for each number of given sequence. Write Yes if given number is nearly prime and No in other case.
+</p>
+Sample Input<span style=""></span>
+<pre style="">1
+6
+</pre>
+Sample Output<span style=""></span>
+<p style="">
+	Yes
+</p>
+<p>
+	&nbsp;
+</p>
+<p>
+	&nbsp;
+</p>
+<pre class="cpp" name="code">#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+bool isPrime(int n){
+	if(n == 2)
+	   return true;
+    if(n % 2 == 0)
+       return false;
+	for(int i = 3; i * i &lt;= n; i += 2)
+		if(n % i == 0)
+			return false;
+	return true;
+}
+bool isNearlyPrime(int n){
+    if(n % 2 == 0 &amp;&amp; isPrime(n / 2))
+        return true;
+    for(int i = 3; i * i &lt;= n; i += 2)
+        if(n % i == 0 &amp;&amp; isPrime(i))
+            if(isPrime(n / i))
+              return true;
+    return false;
+}
+int main(){
+	int n;
+	int a[50005];
+	while(scanf(&quot;%d&quot;,&amp;n) != EOF){
+		for(int i = 0; i &lt; n; i++)
+		  scanf(&quot;%d&quot;,&amp;a[i]);
+		for(int i = 0; i &lt; n; i++){
+			if(isNearlyPrime(a[i]))
+				printf(&quot;Yes\n&quot;);
+			else
+				printf(&quot;No\n&quot;);
+		}
+	}
+	return 0;
+}</pre>
+<p>
+	<br />
+	&nbsp;
+</p>
+
+    <hr>
+    <div class="pagination">
+      <ul>
+        <ul>
+          
+            <li class="prev"><a href="/ACM/%E8%BD%AC%EF%BC%9A-HOJ-1016-Joseph%27s-problem-I/" title="转： HOJ 1016 Joseph&#39;s problem I">&larr; Previous</a></li>
+          
+          
+
+            <li><a href="/archive">Archive</a></li>
+
+          
+            <li class="next"><a href="/ACM/HDOJ-4509--%E6%B9%AB%E6%B9%AB%E7%B3%BB%E5%88%97%E6%95%85%E4%BA%8B%E2%80%94%E2%80%94%E5%87%8F%E8%82%A5%E8%AE%B0II/" title="HDOJ 4509  湫湫系列故事——减肥记II">Next &rarr;</a></li>
+          
+          
+        </ul>
+      </ul>
+    </div>
+    <hr>
+    
+<div id="disqus_thread"></div>
+<script>
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  </div>
+  
+  <div class="span4">
+    <h4>Published</h4>
+    <div class="date"><span>2013-03-27</span></div>
+    <br>
+    <h4>Categories</h4>
+    <ul class="tag_box">
+    
+      <li>
+  <a href="/categories/#ACM-ref">ACM <span>9</span></a>
+</li>
+    
+    </ul>
+    <br>
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    
+      <li>
+  <a href="/tags/#%E6%95%B0%E8%AE%BA-ref">数论 <span>1</span></a>
+</li>
+    
+    </ul>
+  </div>
+</div>
+
+      </div>
+
+      <footer>
+        <p>&copy; pokerG Hao 2013 
+          with help from <a href="http://github.com/wendal/gor" target="_blank" title="Gor -- Fast Blog">Gor</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+		  and Idea from <a href="http://ruhoh.com" target="_blank" title="The Definitive Technical Blogging Framework">ruhoh</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  var pluginUrl = '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-123-12']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+  </body>
+</html>
