@@ -85,15 +85,39 @@
 <div class="row">
   <div class="span12">
     
-<h2>Gor已经为你编译完成了</h2>
-<p>
-  这段文字位于pages/index.html ,使用以下命令获取帮助或访问gor官网
-</p>
-<pre><code>gor help</code></pre>
+
 
 
 <h2>最近更新</h2>
 
+
+<div class="post">
+  <h3 class="title"><a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-pipe/">Go标准库-io-pipe</a> <span class="date">2013-08-28</span></h3>
+
+  <p>&emsp;&emsp;前几天在Github上看到gor——Go编写的静态博客引擎,顿时有了不小的兴趣，就试了一下</p>
+
+<p>&emsp;&emsp;先说说我的感受吧（帮gor做做广告了），首先它的安装真的很简单，作为静态语言，只需要编译成可执行文件就可使用，go的工具链很方便的就能实现，（具体安装方法可以参考它的<a href="https://github.com/wendal/gor">主页</a>.如果你想全局使用的话，将它路径加到$PATH里就行了，这个就不用多说了。当时装jekyll时真是崩溃死了，没学过ruby，先得装ruby，刚开始装的是2.0,然后装jekyll，反正也看不懂，就跟着别人的来，一直出问题，最后用尽各种方法都不行，花了有两个多小时吧，最后灵光一闪，是不是ruby的版本有问题。。然后换成了1.9.3.最后终于成功了。。！！真是崩溃的要死。gor的第二个优点就是速度快，系统级语言确实是不能比的，而且它和jekyll的工作原理不同。这两点我认为是的对新手来说很重要的。</p>
+
+<p>&emsp;&emsp;当然上述其实不是本文的重点（汗。。）。gor 的 元数据 和 jekyll的有点区别。我的Blog虽然不多。但要是一个个手动改的话，也是很麻烦的。作为coder，目的是实现自动化，这种事当然不能这么干，同时也是为了练习Golang，所以就写了个<a href="https://github.com/pokerG/jekyllTogor">脚本</a></p>
+
+<p>&emsp;&emsp;通过写这个脚本，发现了一些问题和情况。好久没有写程序了，手速下降的不行行了。。关键是对Go的不熟练，这个脚本其实是很简单的，但是我写了3个小时把。理论掌握的多，实践少。</p>
+
+<p>&emsp;&emsp;接下来为了改善这种情况，一方面是接着分析Go的标准库，看看Go的创始者的code是怎么写的,这是提高能力的一个关键方法。还有就是练习练习再练习。</p>
+
+<p>&emsp;&emsp;接下来主要先分析这几部分：</p>
+
+<ol>
+<li>string</li>
+<li>file</li>
+<li>regexp</li>
+<li>refelect</li>
+</ol>
+
+
+  <div class="more">
+    <a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-pipe/" class="btn">read more..</a>
+  </div>
+</div>
 
 <div class="post">
   <h3 class="title"><a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-pipe/">Go标准库-io-pipe</a> <span class="date">2013-08-28</span></h3>
@@ -358,25 +382,6 @@ array    &ndash; 固定长度的数组<br /></p>
 
   <div class="more">
     <a href="/Programming Language/Go%E8%AF%AD%E8%A8%80%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/Philosophy/%E9%9D%A9%E5%91%BD/">革命</a> <span class="date">2013-08-16</span></h3>
-
-  <blockquote>
-<p>&emsp;&emsp;&emsp;&emsp;&emsp;加缪的《反抗者》写的很精彩，周国平的点评也很精彩，我忍不住想把它摘录下来</p>
-</blockquote>
-
-<p>&emsp;&emsp;“反抗”在本质上是肯定的，反抗者总是为了捍卫某种价值才说“不”的，他要捍卫的这种价值并不属于个人，而是被视为人性的普遍价值。因此，反抗使个人摆脱孤独。“我反抗，故我们存在”这是反抗的意义所在。但其中也隐含着危险，便是把所要捍卫的价值绝对化。其表现之一，就是以历史的名义进行的反抗，即革命。</p>
-
-<p>&emsp;&emsp;对卢梭的《社会契约论》的批判是《反抗者》中的精彩篇章。加缪一针见血地指出，卢梭的 这部为法国革命奠基的著作是新福音书，新宗教，新神学。革命的特点是要在历史中实现某 种绝对价值，并且声称这种价值的实现就是人类的最终统一和历史的最终完成。这一现代革命概念肇始于法国革命。革命所要实现的那个绝对价值必定是抽象的，至高无上的，在卢梭 那里，它就是与每个人的意志相分离的&rdquo;总体意志&rdquo;。&rdquo;总体意志&rdquo;被宣布为神圣的普遍理 性的体现，因而作为这&rdquo;总体意志&rdquo;之载体的抽象的&rdquo;人民&rdquo;也就成了新的上帝。圣·鞠斯 特进而赋予&rdquo;总体意志&rdquo;以道德含义，并据此把&rdquo;任何在细节上反对共和国&rdquo;亦即触犯&rdquo;总 体意志&rdquo;的行为都宣判为罪恶，从而大开杀戒，用断头台来担保品德的纯洁。浓烈的道德化 色彩也正是现代革命的特点之一，正如加缪所说：&rdquo;法国革命要把历史建立在绝对纯洁的原 则上，开创了形式道德的新纪元。&rdquo;而形式道德是要吃人的，它导致了无限镇压原则。它对 心理的威慑力量甚至使无辜的受害者自觉有罪。我们由此而可明白，圣·鞠斯特本人后来从 被捕到处死为何始终保持着沉默，斯大林时期冤案中的那些被告又为何几乎是满怀热情地给 判处他们死刑的法庭以配合。在这里起作用的已经不是法律，而是神学。既然是神圣的&rdquo;人 民&rdquo;在审判，受审者已被置于与&rdquo;人民&rdquo;相对立的位置上，因而在总体上是有罪的，细节就完全不重要了。</p>
-
-<p>&emsp;&emsp;革命者自命对于历史负有使命，要献身于历史的终极目标。可是他们是从哪里获知这个终极目标的呢？雅斯贝尔斯指出：人处于历史中，所以不可能把握作为整体的历史。加缪引证了这一见解，进一步指出：因此，任何历史举动都是冒险，无权为任何绝对立场辩护。绝对的理性主义就如同绝对的虚无主义一样，也会把人类引向荒漠。</p>
-
-
-  <div class="more">
-    <a href="/Philosophy/%E9%9D%A9%E5%91%BD/" class="btn">read more..</a>
   </div>
 </div>
 

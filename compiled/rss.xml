@@ -3,7 +3,31 @@
   <channel>
     <title>pokerG</title>
     <link>http://pokerg.github.io</link>
-    <pubDate>02 Sep 13 18:27 CST</pubDate>
+    <pubDate>03 Sep 13 20:13 CST</pubDate>
+    <item>
+      <title>Go标准库-io-pipe</title>
+      <link>http://pokerg.github.io/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-pipe/</link>
+      <pubDate>2013-08-28 12:00:00 +0800</pubDate>
+      <description>&lt;p&gt;&amp;emsp;&amp;emsp;前几天在Github上看到gor——Go编写的静态博客引擎,顿时有了不小的兴趣，就试了一下&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;先说说我的感受吧（帮gor做做广告了），首先它的安装真的很简单，作为静态语言，只需要编译成可执行文件就可使用，go的工具链很方便的就能实现，（具体安装方法可以参考它的&lt;a href=&#34;https://github.com/wendal/gor&#34;&gt;主页&lt;/a&gt;.如果你想全局使用的话，将它路径加到$PATH里就行了，这个就不用多说了。当时装jekyll时真是崩溃死了，没学过ruby，先得装ruby，刚开始装的是2.0,然后装jekyll，反正也看不懂，就跟着别人的来，一直出问题，最后用尽各种方法都不行，花了有两个多小时吧，最后灵光一闪，是不是ruby的版本有问题。。然后换成了1.9.3.最后终于成功了。。！！真是崩溃的要死。gor的第二个优点就是速度快，系统级语言确实是不能比的，而且它和jekyll的工作原理不同。这两点我认为是的对新手来说很重要的。&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;当然上述其实不是本文的重点（汗。。）。gor 的 元数据 和 jekyll的有点区别。我的Blog虽然不多。但要是一个个手动改的话，也是很麻烦的。作为coder，目的是实现自动化，这种事当然不能这么干，同时也是为了练习Golang，所以就写了个&lt;a href=&#34;https://github.com/pokerG/jekyllTogor&#34;&gt;脚本&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;通过写这个脚本，发现了一些问题和情况。好久没有写程序了，手速下降的不行行了。。关键是对Go的不熟练，这个脚本其实是很简单的，但是我写了3个小时把。理论掌握的多，实践少。&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;接下来为了改善这种情况，一方面是接着分析Go的标准库，看看Go的创始者的code是怎么写的,这是提高能力的一个关键方法。还有就是练习练习再练习。&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;接下来主要先分析这几部分：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;string&lt;/li&gt;
+&lt;li&gt;file&lt;/li&gt;
+&lt;li&gt;regexp&lt;/li&gt;
+&lt;li&gt;refelect&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     <item>
       <title>Go标准库-io-pipe</title>
       <link>http://pokerg.github.io/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-pipe/</link>
