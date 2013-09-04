@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>苦难</title>
+    <title>jekyllTogor</title>
   
     <meta name="author" content="pokerG Hao">
 
@@ -78,32 +78,43 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>苦难  <small>人在任何时候都拥有不可剥夺的精神自由</small></h1>
+  <h1>jekyllTogor  <small>&#34;&#34;</small></h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <p>&emsp;&emsp;面对社会悲剧，我们有理想、信念、正义感、崇高感支撑着我们，我们相信自己在精神上无比地优越于那迫害乃至毁灭我们的恶势力，因此我们可以含笑受难，慷慨赴死。我们是舞台上的英雄，哪怕眼前这个剧场里的观众全都浑浑噩噩，是非颠倒，我们仍有勇气把戏演下去，演给我们心目中绝对清醒公正的观众看，我们称这观众为历史、上帝或者良心。</p>
+    <p>&emsp;&emsp;前几天在Github上看到gor——Go编写的静态博客引擎,顿时有了不小的兴趣，就试了一下</p>
 
-<p>&emsp;&emsp;可是，面对自然悲剧，我们有什么呢？这里没有舞台，只有空漠无际的苍穹。我们不是英雄，只是朝生暮死的众生。任何人间理想都抚慰不了生老病死的悲哀，在天灾人祸面前也谈不上什么正义感。当史前人类遭受大洪水的灭顶之灾时，当庞贝城居民被维苏威火山的岩浆吞没时，他们能有什么慰藉呢？地震,海啸，车祸，空难，瘟疫，绝症&hellip;&hellip;大自然的恶势力轻而易举地把我们或我们的亲人毁灭。我们面对的是没有灵魂的敌手，因而不能以精神的优越自慰，却愈发感到了生命的卑微。没有上帝来拯救我们，因为这灾难正是上帝亲手降下。我们愤怒，但无从泄愤。我们冤屈，但永无申冤之日。我们反抗，但我们的反抗孤立无助，注定失败。</p>
+<p>&emsp;&emsp;先说说我的感受吧（帮gor做做广告了），首先它的安装真的很简单，作为静态语言，只需要编译成可执行文件就可使用，go的工具链很方便的就能实现，（具体安装方法可以参考它的<a href="https://github.com/wendal/gor">主页</a>.如果你想全局使用的话，将它路径加到$PATH里就行了，这个就不用多说了。当时装jekyll时真是崩溃死了，没学过ruby，先得装ruby，刚开始装的是2.0,然后装jekyll，反正也看不懂，就跟着别人的来，一直出问题，最后用尽各种方法都不行，花了有两个多小时吧，最后灵光一闪，是不是ruby的版本有问题。。然后换成了1.9.3.最后终于成功了。。！！真是崩溃的要死。gor的第二个优点就是速度快，系统级语言确实是不能比的，而且它和jekyll的工作原理不同。这两点我认为是的对新手来说很重要的。</p>
 
-<p>&emsp;&emsp;然而我们未必就因此倒下。也许，没有浪漫气息的悲剧是我们最本质的悲剧，不具有英雄色彩的勇气是我们最真实的勇气。在无可告慰的绝望中，我们咬牙挺住。我们挺立在那里，没有观众，没有证人，也没有期待，没有援军。我们不倒下，仅仅是因为我们不肯让自己倒下。我们以此维护了人的最高的也是最后的尊严————人在神面前的尊严。</p>
+<p>&emsp;&emsp;当然上述其实不是本文的重点（汗。。）。gor 的 元数据 和 jekyll的有点区别。我的Blog虽然不多。但要是一个个手动改的话，也是很麻烦的。作为coder，目的是实现自动化，这种事当然不能这么干，同时也是为了练习Golang，所以就写了个<a href="https://github.com/pokerG/jekyllTogor">脚本</a></p>
 
-<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;————周国平</p>
+<p>&emsp;&emsp;通过写这个脚本，发现了一些问题和情况。好久没有写程序了，手速下降的不行行了。。关键是对Go的不熟练，这个脚本其实是很简单的，但是我写了3个小时把。理论掌握的多，实践少。</p>
+
+<p>&emsp;&emsp;接下来为了改善这种情况，一方面是接着分析Go的标准库，看看Go的创始者的code是怎么写的,这是提高能力的一个关键方法。还有就是练习练习再练习。</p>
+
+<p>&emsp;&emsp;接下来主要先分析这几部分：</p>
+
+<ol>
+<li>string</li>
+<li>file</li>
+<li>regexp</li>
+<li>refelect</li>
+</ol>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/Programming Language/interface/" title="interface">&larr; Previous</a></li>
+            <li class="prev"><a href="/History/%E6%96%87%E6%98%8E%E7%9A%84%E7%BF%85%E8%86%80/" title="文明的翅膀">&larr; Previous</a></li>
           
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/Programming Language/channel%E7%9A%84%E4%B8%A4%E4%B8%AA%E7%89%B9%E6%80%A7/" title="channel的两个特性">Next &rarr;</a></li>
+            <li class="next"><a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-bufio/" title="Go标准库-bufio">Next &rarr;</a></li>
           
           
         </ul>
@@ -129,13 +140,13 @@
   
   <div class="span4">
     <h4>Published</h4>
-    <div class="date"><span>2013-08-24</span></div>
+    <div class="date"><span>2013-09-03</span></div>
     <br>
     <h4>Categories</h4>
     <ul class="tag_box">
     
       <li>
-  <a href="/categories/#Philosophy-ref">Philosophy <span>3</span></a>
+  <a href="/categories/#Programming-Language-ref">Programming Language <span>12</span></a>
 </li>
     
     </ul>
@@ -144,11 +155,15 @@
     <ul class="tag_box">
     
       <li>
-  <a href="/tags/#%E8%AF%BB%E4%B9%A6%E6%84%9F%E6%82%9F-ref">读书感悟 <span>4</span></a>
+  <a href="/tags/#Go-ref">Go <span>12</span></a>
 </li>
     
       <li>
-  <a href="/tags/#%E6%91%98%E5%BD%95-ref">摘录 <span>2</span></a>
+  <a href="/tags/#%E6%84%9F%E6%82%9F-ref">感悟 <span>1</span></a>
+</li>
+    
+      <li>
+  <a href="/tags/#%E8%AE%A1%E5%88%92-ref">计划 <span>1</span></a>
 </li>
     
     </ul>

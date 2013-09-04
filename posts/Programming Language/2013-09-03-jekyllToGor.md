@@ -1,7 +1,7 @@
 ---
-date: 2013-08-28
+date: 2013-09-03
 layout:  post
-title:  Go标准库-io-pipe
+title:  jekyllTogor
 tagline:  ""
 categories:
 -  Programming Language

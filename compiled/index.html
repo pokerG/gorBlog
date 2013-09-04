@@ -92,7 +92,36 @@
 
 
 <div class="post">
-  <h3 class="title"><a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-pipe/">Go标准库-io-pipe</a> <span class="date">2013-08-28</span></h3>
+  <h3 class="title"><a href="/History/%E6%96%87%E6%98%8E%E7%9A%84%E7%BF%85%E8%86%80/">文明的翅膀</a> <span class="date">2013-09-04</span></h3>
+
+  <p>&emsp;&emsp;历史的进程是残酷的。上了“文明毁灭黑名单”的有古埃及，巴比伦，哈拉巴，克里特，奥尔梅克，赫梯，波斯，玛雅等等，不下二三十中。</p>
+
+<p>&emsp;&emsp;绵延不绝的是中华文明起死回生的则是希腊-罗马文明。何以如此？这是一个“斯芬克斯之谜”。易中天在《易中天中华史-奠基人》中揭示了这个谜底。这篇文章虽然观点并不是很新颖，但是从角度上来说，让我读起来感觉很有趣。</p>
+
+<p>&emsp;&emsp;斯芬克斯，是希腊人对狮身人面像的称呼。不过在希腊的斯芬克斯却又两只翅膀。这就比古埃及的那个家伙，显得轻盈娟修。翅膀，是重要的。没有翅膀就不能飞。文明没有翅膀，就只能原地踏步，最终只得陨落。但是怎样飞翔，却要看是什么样的翅膀。</p>
+
+<p>&emsp;&emsp;中华的翅膀，是忧患心理和乐观态度。</p>
+
+<p>&emsp;&emsp;忧患是我们民族文化的底色。从《诗·小雅·小旻》“战战兢兢，如临深渊，如履薄冰“，到孟子的“生于忧患，死于安乐”，再到《义勇军进行曲》，忧患意识贯穿来整个中华史。</p>
+
+<p>&emsp;&emsp;但是我们民族优势乐观的。我们相信“天遂人愿”，相信“善恶有报”，相信“事在人为”。因此，我们“不改其乐”，哪怕“自得其乐”,也总归”乐在其中“。</p>
+
+<p>&emsp;&emsp;一忧一乐，从制度上来说就是有礼有乐。礼就是“理”，伦理，秩序，体现忧患；乐（le）就是“乐”（yue），讲快乐，讲和谐，造就乐观。</p>
+
+<p>&emsp;&emsp;希腊的翅膀，是科学精神和艺术气质。</p>
+
+<p>&emsp;&emsp;希腊人的科学不是实用主义的。他们“为思想而思想，为科学而科学”。所以他们能把埃及人用于测量土地和修建金字塔的技术，变成几何学；也能把巴比伦的占星术，变成天文学。</p>
+
+<p>&emsp;&emsp;与此同时，希腊人又极具艺术气质。正如马克思所说，希腊人是”正常的儿童“，所以”为艺术而艺术，为审美而审美“。这种纯粹，使他们即使在纵欲和淫乐，也毫无负罪感。</p>
+
+
+  <div class="more">
+    <a href="/History/%E6%96%87%E6%98%8E%E7%9A%84%E7%BF%85%E8%86%80/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/Programming Language/jekyllTogor/">jekyllTogor</a> <span class="date">2013-09-03</span></h3>
 
   <p>&emsp;&emsp;前几天在Github上看到gor——Go编写的静态博客引擎,顿时有了不小的兴趣，就试了一下</p>
 
@@ -115,7 +144,36 @@
 
 
   <div class="more">
-    <a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-pipe/" class="btn">read more..</a>
+    <a href="/Programming Language/jekyllTogor/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-bufio/">Go标准库-bufio</a> <span class="date">2013-08-28</span></h3>
+
+  <p>&emsp;&emsp;bufio包实现了带缓存的I/O操作。封装了一个io.Reader或io.Writer对象，返回一个具有缓存和文本读写的对象。</p>
+
+<h1>bufio.go</h1>
+
+<pre><code>//实现了带缓存的
+type Reader struct{
+        buf          []byte
+        rd           io.Reader
+        r, w         int
+        err          error
+        lastByte     int
+        lastRuneSize int
+}
+
+//NewReaderSize将rd封装成一个具有size大小的bufio.Reader对象
+//如果rd的类型就是bufio.Reader且size &gt; minReadBufferSize = 16 直接返回
+//size的大小要大于 minReadBufferSize 否则 返回大小为minReadBufferSize的bufio.Reader
+func NewReaderSize(rd io.Reader, size int) *Reader
+</code></pre>
+
+
+  <div class="more">
+    <a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-bufio/" class="btn">read more..</a>
   </div>
 </div>
 
@@ -322,66 +380,6 @@ func main() {
 
   <div class="more">
     <a href="/Programming Language/channel%E7%9A%84%E4%B8%A4%E4%B8%AA%E7%89%B9%E6%80%A7/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/Programming Language/Go-Build-in/">Go Build in</a> <span class="date">2013-08-20</span></h3>
-
-  <h2>内置关键字（25个 均为小写）</h2>
-
-<blockquote>
-<p>break&emsp;&emsp;default&emsp;&emsp;func&emsp;&emsp;interface&emsp;&emsp;select<br />
-case&emsp;&emsp;defer&emsp;&emsp;go&emsp;&emsp;map&emsp;&emsp;struct<br />
-chan&emsp;&emsp;else&emsp;&emsp;goto&emsp;&emsp;package&emsp;&emsp;switch<br />
-const&emsp;&emsp;fallthrough&emsp;&emsp;if&emsp;&emsp;range&emsp;&emsp;type<br />
-continue&emsp;&emsp;for&emsp;&emsp; import&emsp;&emsp;return&emsp;&emsp;var <br/></p>
-</blockquote>
-
-<h2>内置类型</h2>
-
-<blockquote>
-<p>值类型：<br />
-bool<br />
-byte<br />
-int(32 or 64), int8, int16, int32, int64<br />
-uint(32 or 64), uint8(byte), uint16, uint32, uint64<br />
-float32, float64<br />
-string<br />
-complex64, complex128   &ndash;复数<br />
-array    &ndash; 固定长度的数组<br /></p>
-</blockquote>
-
-
-  <div class="more">
-    <a href="/Programming Language/Go-Build-in/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/Programming Language/Go%E8%AF%AD%E8%A8%80%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC/">Go语言代码风格</a> <span class="date">2013-08-19</span></h3>
-
-  <blockquote>
-<p>&emsp;&emsp;代码必须是本着写给人阅读的原则来编写，只不过顺便给机器执行而已。</p>
-
-<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&mdash;《计算机程序设计与解释》</p>
-</blockquote>
-
-<p>&emsp;&emsp;对于程序员来说，代码风格的重要性自然是不必多说的，我曾经买过一本《Java编程风格》，我们想想光是代码风格就要写成一本书，是多么让人头疼。而Go语言很有可能是第一个将代码风格强制统一的语言。一些在其他语言中编译器可以通过的问题，在Go编译器中会被认为是编译错误。由于刚好Go语言强制规定的代码形式都是我常用的，也是我很喜欢的，所以非常幸运啊。。（这也是我喜欢Go语言的一个重要原因）。</p>
-
-<p>&emsp;&emsp;Go语言关于编码规范的问题，主要分为两类，一是：由编译器进行的强制代码规范；二是：由go fmt 格式化的非强制性编码风格。</p>
-
-<p>&emsp;&emsp;Go语言的强制代码规范是Go设计者认为最需要统一的风格。首先，就是命名，Go语言对于可见性的规则不像C语言用 private public 等关键字来声明可见性，而是规定暴露于外部的名字用大写开头，不需要暴露的用小写字母开头。目前比较流行的命名法有两种：骆驼命名法 和 下划线法。Go语言明确宣告支持骆驼命名法，排斥下划线法。虽然以前写C语言都用的是下划线法，但是后来用php，js，python什么的用的是都是骆驼命名法，而且骆驼命名法打起来明显比下划线法方便，所以也是很喜欢。</p>
-
-<p>&emsp;&emsp;还有就是关于花括号的问题。最初的风格为K&amp;R，后来又有了MS风格，可能因为Go语言的设计者有Ken Thompson，所以，，我们还是使用他所创的那种风格吧。而且我觉得这样写代码更加紧凑，而且清晰度也很高。</p>
-
-<p>&emsp;&emsp;另外Go工具链中还有个go fmt用来格式化代码。它可以调整语句的位置，重新摆放花括号的位置，以制表符来缩进，添加空格等等。</p>
-
-<p>&emsp;&emsp;总的来说，Go语言的代码规范可以算是集C语言出世这几十年来的思想之大成，优雅，规范，非常对我胃口</p>
-
-
-  <div class="more">
-    <a href="/Programming Language/Go%E8%AF%AD%E8%A8%80%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC/" class="btn">read more..</a>
   </div>
 </div>
 

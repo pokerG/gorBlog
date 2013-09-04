@@ -4,7 +4,17 @@
 		<loc>http://pokerg.github.io/</loc>
 	</url>
 	<url>
-		<loc>http://pokerg.github.io/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-pipe/</loc>
+		<loc>http://pokerg.github.io/History/%E6%96%87%E6%98%8E%E7%9A%84%E7%BF%85%E8%86%80/</loc>
+		<lastmod>2013-09-04</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+		<loc>http://pokerg.github.io/Programming Language/jekyllTogor/</loc>
+		<lastmod>2013-09-03</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+		<loc>http://pokerg.github.io/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-bufio/</loc>
 		<lastmod>2013-08-28</lastmod>
 		<changefreq>weekly</changefreq>
 	</url>

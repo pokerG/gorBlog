@@ -3,11 +3,41 @@
   <channel>
     <title>pokerG</title>
     <link>http://pokerg.github.io</link>
-    <pubDate>03 Sep 13 20:13 CST</pubDate>
+    <pubDate>04 Sep 13 09:06 CST</pubDate>
     <item>
-      <title>Go标准库-io-pipe</title>
-      <link>http://pokerg.github.io/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-pipe/</link>
-      <pubDate>2013-08-28 12:00:00 +0800</pubDate>
+      <title>文明的翅膀</title>
+      <link>http://pokerg.github.io/History/%E6%96%87%E6%98%8E%E7%9A%84%E7%BF%85%E8%86%80/</link>
+      <pubDate>2013-09-04 12:00:00 +0800</pubDate>
+      <description>&lt;p&gt;&amp;emsp;&amp;emsp;历史的进程是残酷的。上了“文明毁灭黑名单”的有古埃及，巴比伦，哈拉巴，克里特，奥尔梅克，赫梯，波斯，玛雅等等，不下二三十中。&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;绵延不绝的是中华文明起死回生的则是希腊-罗马文明。何以如此？这是一个“斯芬克斯之谜”。易中天在《易中天中华史-奠基人》中揭示了这个谜底。这篇文章虽然观点并不是很新颖，但是从角度上来说，让我读起来感觉很有趣。&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;斯芬克斯，是希腊人对狮身人面像的称呼。不过在希腊的斯芬克斯却又两只翅膀。这就比古埃及的那个家伙，显得轻盈娟修。翅膀，是重要的。没有翅膀就不能飞。文明没有翅膀，就只能原地踏步，最终只得陨落。但是怎样飞翔，却要看是什么样的翅膀。&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;中华的翅膀，是忧患心理和乐观态度。&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;忧患是我们民族文化的底色。从《诗·小雅·小旻》“战战兢兢，如临深渊，如履薄冰“，到孟子的“生于忧患，死于安乐”，再到《义勇军进行曲》，忧患意识贯穿来整个中华史。&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;但是我们民族优势乐观的。我们相信“天遂人愿”，相信“善恶有报”，相信“事在人为”。因此，我们“不改其乐”，哪怕“自得其乐”,也总归”乐在其中“。&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;一忧一乐，从制度上来说就是有礼有乐。礼就是“理”，伦理，秩序，体现忧患；乐（le）就是“乐”（yue），讲快乐，讲和谐，造就乐观。&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;希腊的翅膀，是科学精神和艺术气质。&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;希腊人的科学不是实用主义的。他们“为思想而思想，为科学而科学”。所以他们能把埃及人用于测量土地和修建金字塔的技术，变成几何学；也能把巴比伦的占星术，变成天文学。&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;与此同时，希腊人又极具艺术气质。正如马克思所说，希腊人是”正常的儿童“，所以”为艺术而艺术，为审美而审美“。这种纯粹，使他们即使在纵欲和淫乐，也毫无负罪感。&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;科学与艺术，在希腊人那里是对立的，也是统一的。统一于单纯，统一于天然，统一于率真。&lt;/p&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;希腊精神是互补的。同样中华精神也是互补结构。对立统一，相辅相成，共同塑造着一个伟大的民族。
+这也许就是秘密所在&amp;ndash;那些毁灭的文明，很可能都只有一只翅膀。&lt;/p&gt;
+</description>
+    </item>
+    <item>
+      <title>jekyllTogor</title>
+      <link>http://pokerg.github.io/Programming Language/jekyllTogor/</link>
+      <pubDate>2013-09-03 12:00:00 +0800</pubDate>
       <description>&lt;p&gt;&amp;emsp;&amp;emsp;前几天在Github上看到gor——Go编写的静态博客引擎,顿时有了不小的兴趣，就试了一下&lt;/p&gt;
 
 &lt;p&gt;&amp;emsp;&amp;emsp;先说说我的感受吧（帮gor做做广告了），首先它的安装真的很简单，作为静态语言，只需要编译成可执行文件就可使用，go的工具链很方便的就能实现，（具体安装方法可以参考它的&lt;a href=&#34;https://github.com/wendal/gor&#34;&gt;主页&lt;/a&gt;.如果你想全局使用的话，将它路径加到$PATH里就行了，这个就不用多说了。当时装jekyll时真是崩溃死了，没学过ruby，先得装ruby，刚开始装的是2.0,然后装jekyll，反正也看不懂，就跟着别人的来，一直出问题，最后用尽各种方法都不行，花了有两个多小时吧，最后灵光一闪，是不是ruby的版本有问题。。然后换成了1.9.3.最后终于成功了。。！！真是崩溃的要死。gor的第二个优点就是速度快，系统级语言确实是不能比的，而且它和jekyll的工作原理不同。这两点我认为是的对新手来说很重要的。&lt;/p&gt;
@@ -26,6 +56,31 @@
 &lt;li&gt;regexp&lt;/li&gt;
 &lt;li&gt;refelect&lt;/li&gt;
 &lt;/ol&gt;
+</description>
+    </item>
+    <item>
+      <title>Go标准库-bufio</title>
+      <link>http://pokerg.github.io/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-bufio/</link>
+      <pubDate>2013-08-28 12:00:00 +0800</pubDate>
+      <description>&lt;p&gt;&amp;emsp;&amp;emsp;bufio包实现了带缓存的I/O操作。封装了一个io.Reader或io.Writer对象，返回一个具有缓存和文本读写的对象。&lt;/p&gt;
+
+&lt;h1&gt;bufio.go&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;//实现了带缓存的
+type Reader struct{
+        buf          []byte
+        rd           io.Reader
+        r, w         int
+        err          error
+        lastByte     int
+        lastRuneSize int
+}
+
+//NewReaderSize将rd封装成一个具有size大小的bufio.Reader对象
+//如果rd的类型就是bufio.Reader且size &amp;gt; minReadBufferSize = 16 直接返回
+//size的大小要大于 minReadBufferSize 否则 返回大小为minReadBufferSize的bufio.Reader
+func NewReaderSize(rd io.Reader, size int) *Reader
+&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     <item>
