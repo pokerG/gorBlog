@@ -4,8 +4,8 @@ description:
 ---
 
 
-&emsp;&emsp;Man is a by deposed king, otherwise wouldn't have lost because his throne and sad&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;------Blaise Pascal
-===
+&emsp;&emsp;**Man is a by deposed king, otherwise wouldn't have lost because his throne and sad&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;------Blaise Pascal**
+
 
 &emsp;&emsp;
 

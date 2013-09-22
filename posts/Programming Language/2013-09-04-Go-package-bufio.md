@@ -29,5 +29,11 @@ bufio.go
     //如果rd的类型就是bufio.Reader且size > minReadBufferSize = 16 直接返回
     //size的大小要大于 minReadBufferSize 否则 返回大小为minReadBufferSize的bufio.Reader
     func NewReaderSize(rd io.Reader, size int) *Reader
+    
+    //NewReader 返回 大小为defaultBufSize = 4096的Reader
+    func NewReader(rd io.Reader) *Reader
+    
+    //Peek返回
+    func (b *Reader) Peek(n int) ([]byte, error)
 
     

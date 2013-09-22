@@ -3,7 +3,54 @@
   <channel>
     <title>pokerG</title>
     <link>http://pokerg.github.io</link>
-    <pubDate>04 Sep 13 09:06 CST</pubDate>
+    <pubDate>22 Sep 13 16:26 CST</pubDate>
+    <item>
+      <title>Go1.2 Release</title>
+      <link>http://pokerg.github.io/Programming Language/Go1.2-Release/</link>
+      <pubDate>2013-09-22 12:00:00 +0800</pubDate>
+      <description>&lt;p&gt;&amp;emsp;&amp;emsp;Go1.2发布了，做了一些调整和改进，这里我就只谈谈几个跟我目前关系比较大的，其他的请去查看[release notes](&amp;ldquo;http://tip.golang.org/doc/go1.2&amp;rdquo;)&lt;/p&gt;
+
+&lt;h1&gt;nil 的使用&lt;/h1&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;在Go1.0中 例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;type T struct {
+    X [1&amp;lt;&amp;lt;24]byte
+    Field int32
+}
+
+func main() {
+    var x *T
+    ...
+} 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;这个nil 指针 x 可以访问非法内存， x.Field 可以访问 1&amp;lt;&amp;lt;24的内存.在Go1.2中 编译器会确保不会错误的使用nil 指针。&lt;/p&gt;
+
+&lt;h1&gt;切片有三个index&lt;/h1&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;在Go1.2中 使用切片操作一个存在的数组或切片时可以指定容量（capacity）。必须小于原数组或切片的容量。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var array [10]int
+slice = array[2:4:6]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;第三个index是用来指定容量的。当操作 这个 slice时 ，不能访问 原 array 中 的后两个元素&lt;/p&gt;
+
+&lt;h1&gt;Test coverage&lt;/h1&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;关于 go test -cover  目前还不是很清楚，所以先空下了， 可以通过 &lt;code&gt;go help testflag&lt;/code&gt;
+或 &lt;code&gt;go tool cover -help&lt;/code&gt;  来查看具体用法和作用&lt;/p&gt;
+
+&lt;h1&gt;go doc 被删掉&lt;/h1&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;现在没有 &amp;ldquo;go doc&amp;rdquo; 这个命令了， 只有 &amp;ldquo;godoc&amp;rdquo;&lt;/p&gt;
+
+&lt;h1&gt;go get -t&lt;/h1&gt;
+
+&lt;p&gt;&amp;emsp;&amp;emsp;-t 参数 可以下载package的依赖项的测试程序&lt;/p&gt;
+</description>
+    </item>
     <item>
       <title>文明的翅膀</title>
       <link>http://pokerg.github.io/History/%E6%96%87%E6%98%8E%E7%9A%84%E7%BF%85%E8%86%80/</link>
@@ -80,6 +127,12 @@ type Reader struct{
 //如果rd的类型就是bufio.Reader且size &amp;gt; minReadBufferSize = 16 直接返回
 //size的大小要大于 minReadBufferSize 否则 返回大小为minReadBufferSize的bufio.Reader
 func NewReaderSize(rd io.Reader, size int) *Reader
+
+//NewReader 返回 大小为defaultBufSize = 4096的Reader
+func NewReader(rd io.Reader) *Reader
+
+//Peek返回
+func (b *Reader) Peek(n int) ([]byte, error)
 &lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>

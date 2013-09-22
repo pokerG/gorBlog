@@ -92,6 +92,34 @@
 
 
 <div class="post">
+  <h3 class="title"><a href="/Programming Language/Go1.2-Release/">Go1.2 Release</a> <span class="date">2013-09-22</span></h3>
+
+  <p>&emsp;&emsp;Go1.2发布了，做了一些调整和改进，这里我就只谈谈几个跟我目前关系比较大的，其他的请去查看[release notes](&ldquo;http://tip.golang.org/doc/go1.2&rdquo;)</p>
+
+<h1>nil 的使用</h1>
+
+<p>&emsp;&emsp;在Go1.0中 例如：</p>
+
+<pre><code>type T struct {
+    X [1&lt;&lt;24]byte
+    Field int32
+}
+
+func main() {
+    var x *T
+    ...
+} 
+</code></pre>
+
+<p>&emsp;&emsp;这个nil 指针 x 可以访问非法内存， x.Field 可以访问 1&lt;&lt;24的内存.在Go1.2中 编译器会确保不会错误的使用nil 指针。</p>
+
+
+  <div class="more">
+    <a href="/Programming Language/Go1.2-Release/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
   <h3 class="title"><a href="/History/%E6%96%87%E6%98%8E%E7%9A%84%E7%BF%85%E8%86%80/">文明的翅膀</a> <span class="date">2013-09-04</span></h3>
 
   <p>&emsp;&emsp;历史的进程是残酷的。上了“文明毁灭黑名单”的有古埃及，巴比伦，哈拉巴，克里特，奥尔梅克，赫梯，波斯，玛雅等等，不下二三十中。</p>
@@ -346,40 +374,6 @@ func (b *s2)foo(){
 
   <div class="more">
     <a href="/Philosophy/%E8%8B%A6%E9%9A%BE/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/Programming Language/channel%E7%9A%84%E4%B8%A4%E4%B8%AA%E7%89%B9%E6%80%A7/">channel的两个特性</a> <span class="date">2013-08-22</span></h3>
-
-  <p>&emsp;&emsp;channel是Go提供的语言级goroutine间的通信方式。它提供了一种优雅而又强大的，在不使用锁的情况下，从某个goroutine向其他goroutine发送数据流的方式。</p>
-
-<p>&esmp;emsp;这次着重讨论channel的两个重要特性。参考：<a href="http://dave.cheney.net/2013/04/30/curious-channels">http://dave.cheney.net/<sup>2013</sup>&frasl;<sub>04</sub>/30/curious-channels</a></p>
-
-<h2>被关闭的channel不会block</h2>
-
-<p>&esmp;emsp;一个channel一旦被关闭，就不能再向其发送数据，但是仍然可以获取其中的。</p>
-
-<pre><code>package main
-
-import &quot;fmt&quot;
-
-func main() {
-    ch := make(chan bool, 2)
-    ch &lt;- true
-    ch &lt;- true
-    close(ch)
-
-    for i := 0; i &lt; cap(ch) +1 ; i++ {
-            v, ok := &lt;- ch
-            fmt.Println(v, ok)
-    }
-}
-</code></pre>
-
-
-  <div class="more">
-    <a href="/Programming Language/channel%E7%9A%84%E4%B8%A4%E4%B8%AA%E7%89%B9%E6%80%A7/" class="btn">read more..</a>
   </div>
 </div>
 

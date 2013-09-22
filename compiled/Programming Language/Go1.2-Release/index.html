@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>苦难</title>
+    <title>Go1.2 Release</title>
   
     <meta name="author" content="pokerG Hao">
 
@@ -78,32 +78,66 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>苦难  <small>人在任何时候都拥有不可剥夺的精神自由</small></h1>
+  <h1>Go1.2 Release  <small>&#34;&#34;</small></h1>
 </div>
 
 <div class="row">
   <div class="span8">
-    <p>&emsp;&emsp;面对社会悲剧，我们有理想、信念、正义感、崇高感支撑着我们，我们相信自己在精神上无比地优越于那迫害乃至毁灭我们的恶势力，因此我们可以含笑受难，慷慨赴死。我们是舞台上的英雄，哪怕眼前这个剧场里的观众全都浑浑噩噩，是非颠倒，我们仍有勇气把戏演下去，演给我们心目中绝对清醒公正的观众看，我们称这观众为历史、上帝或者良心。</p>
+    <p>&emsp;&emsp;Go1.2发布了，做了一些调整和改进，这里我就只谈谈几个跟我目前关系比较大的，其他的请去查看[release notes](&ldquo;http://tip.golang.org/doc/go1.2&rdquo;)</p>
 
-<p>&emsp;&emsp;可是，面对自然悲剧，我们有什么呢？这里没有舞台，只有空漠无际的苍穹。我们不是英雄，只是朝生暮死的众生。任何人间理想都抚慰不了生老病死的悲哀，在天灾人祸面前也谈不上什么正义感。当史前人类遭受大洪水的灭顶之灾时，当庞贝城居民被维苏威火山的岩浆吞没时，他们能有什么慰藉呢？地震,海啸，车祸，空难，瘟疫，绝症&hellip;&hellip;大自然的恶势力轻而易举地把我们或我们的亲人毁灭。我们面对的是没有灵魂的敌手，因而不能以精神的优越自慰，却愈发感到了生命的卑微。没有上帝来拯救我们，因为这灾难正是上帝亲手降下。我们愤怒，但无从泄愤。我们冤屈，但永无申冤之日。我们反抗，但我们的反抗孤立无助，注定失败。</p>
+<h1>nil 的使用</h1>
 
-<p>&emsp;&emsp;然而我们未必就因此倒下。也许，没有浪漫气息的悲剧是我们最本质的悲剧，不具有英雄色彩的勇气是我们最真实的勇气。在无可告慰的绝望中，我们咬牙挺住。我们挺立在那里，没有观众，没有证人，也没有期待，没有援军。我们不倒下，仅仅是因为我们不肯让自己倒下。我们以此维护了人的最高的也是最后的尊严————人在神面前的尊严。</p>
+<p>&emsp;&emsp;在Go1.0中 例如：</p>
 
-<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;————周国平</p>
+<pre><code>type T struct {
+    X [1&lt;&lt;24]byte
+    Field int32
+}
+
+func main() {
+    var x *T
+    ...
+} 
+</code></pre>
+
+<p>&emsp;&emsp;这个nil 指针 x 可以访问非法内存， x.Field 可以访问 1&lt;&lt;24的内存.在Go1.2中 编译器会确保不会错误的使用nil 指针。</p>
+
+<h1>切片有三个index</h1>
+
+<p>&emsp;&emsp;在Go1.2中 使用切片操作一个存在的数组或切片时可以指定容量（capacity）。必须小于原数组或切片的容量。</p>
+
+<pre><code>var array [10]int
+slice = array[2:4:6]
+</code></pre>
+
+<p>&emsp;&emsp;第三个index是用来指定容量的。当操作 这个 slice时 ，不能访问 原 array 中 的后两个元素</p>
+
+<h1>Test coverage</h1>
+
+<p>&emsp;&emsp;关于 go test -cover  目前还不是很清楚，所以先空下了， 可以通过 <code>go help testflag</code>
+或 <code>go tool cover -help</code>  来查看具体用法和作用</p>
+
+<h1>go doc 被删掉</h1>
+
+<p>&emsp;&emsp;现在没有 &ldquo;go doc&rdquo; 这个命令了， 只有 &ldquo;godoc&rdquo;</p>
+
+<h1>go get -t</h1>
+
+<p>&emsp;&emsp;-t 参数 可以下载package的依赖项的测试程序</p>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/Programming Language/interface/" title="interface">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/Programming Language/channel%E7%9A%84%E4%B8%A4%E4%B8%AA%E7%89%B9%E6%80%A7/" title="channel的两个特性">Next &rarr;</a></li>
+            <li class="next"><a href="/History/%E6%96%87%E6%98%8E%E7%9A%84%E7%BF%85%E8%86%80/" title="文明的翅膀">Next &rarr;</a></li>
           
           
         </ul>
@@ -129,13 +163,13 @@
   
   <div class="span4">
     <h4>Published</h4>
-    <div class="date"><span>2013-08-24</span></div>
+    <div class="date"><span>2013-09-22</span></div>
     <br>
     <h4>Categories</h4>
     <ul class="tag_box">
     
       <li>
-  <a href="/categories/#Philosophy-ref">Philosophy <span>3</span></a>
+  <a href="/categories/#Programming-Language-ref">Programming Language <span>13</span></a>
 </li>
     
     </ul>
@@ -144,11 +178,7 @@
     <ul class="tag_box">
     
       <li>
-  <a href="/tags/#%E8%AF%BB%E4%B9%A6%E6%84%9F%E6%82%9F-ref">读书感悟 <span>4</span></a>
-</li>
-    
-      <li>
-  <a href="/tags/#%E6%91%98%E5%BD%95-ref">摘录 <span>2</span></a>
+  <a href="/tags/#Go-ref">Go <span>13</span></a>
 </li>
     
     </ul>
