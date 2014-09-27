@@ -140,6 +140,7 @@ boot_flag:
 	   
 这是我的结果
 
+<pre><code>
     mov cx,#108
     msg1:
 	.byte 13,10
@@ -151,7 +152,7 @@ boot_flag:
 	.byte 13,10
 	.ascii "pokerface is booting ..."
 	.byte 13,10,13,10
-	
+</code></pre>	
 输出 *HIT-OS pokerface is booting ...*
 
 ####第二个其实也非常简单，只不过实验指导书上写的有些歧义。就是在*setup.s*的开头加上一段输出的代码
