@@ -1,0 +1,25 @@
+---
+date: 2013-10-30
+layout:  post
+title:  "Go简单的下载器实现"
+tagline:  ""
+categories:
+-  Programming Language
+tags:
+- Go
+---
+
+ <p>&emsp;&emsp;用Go来实现下载功能还是很简单的。直接看代码吧</p>
+
+<pre><code>func download(url string){
+    resp,err := http.Get(url)
+    handleErr(err)
+    defer resp.Body.Close()
+    body,err := ioutil.ReadAll(resp.Body)
+    handleErr(err)
+    err := ioutil.WriteFile(&quot;./test&quot;,body,0666)
+    handleErr(err)
+}
+</code></pre>
+
+<p>&emsp;&emsp;核心部分就如此简单，剩下的就自己发挥啦。 比如断点续传什么的。</p>

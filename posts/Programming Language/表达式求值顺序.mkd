@@ -1,0 +1,65 @@
+---
+date: 2013-11-15
+layout:  post
+title:  "表达式求值顺序"
+tagline:  ""
+categories:
+-  Programming Language
+tags:
+- Go
+---
+
+<p>&emsp;&emsp;原文来自于<a href="http://dave.cheney.net/2013/11/15/evaluation-order-oddity">http://dave.cheney.net/<sup>2013</sup>&frasl;<sub>11</sub>/15/evaluation-order-oddity</a></p>
+
+<p>&emsp;&emsp;先来看这段代码</p>
+
+<pre><code>package main
+
+import &quot;fmt&quot;
+
+type T struct {
+        i int
+}
+
+func (t *T) readInt() int {
+        t.i += 4
+        return 42
+}
+
+func main() {
+        var d = T{i: 200}
+        end := d.i - 4 + d.readInt()
+        fmt.Println(end)
+}
+</code></pre>
+
+<p>&emsp;&emsp;根据Go<a href="http://golang.org/ref/spec#Order_of_evaluation">spec</a>我们可知表达式的求值过程是自左向右的。所以我们可以想想这段代码打印出来的应该是</p>
+
+<pre><code>200-4 + 42 = 238
+</code></pre>
+
+<p>&emsp;&emsp;但是238是正确答案么？</p>
+
+<pre><code>% go run odd.go 
+242
+</code></pre>
+
+<p>&emsp;&emsp;啊，太奇怪了，然后让我们来看看gccgo的结果</p>
+
+<pre><code>% go run -compiler gccgo odd.go 
+238
+</code></pre>
+
+<p>&emsp;&esmp;看来它得到了正确答案，那么是gc有问题了或者这个表达式的求值方式确实是相反的？</p>
+
+<p>&emsp;&emsp;事实上这两个编译器都是正确的，因为这个表达式的求值顺序是不确定的。</p>
+
+<p>&emsp;&emsp;如果想要得到你想要的答案，应该把这个表达式分成两行，消除加d.i时的二义性。</p>
+
+<pre><code>func main() {
+        var d = T{i:200}
+        v := int(d.readInt32())
+        end := v + d.i - 4
+        fmt.Println(end)    // prints         242
+}
+</code></pre>

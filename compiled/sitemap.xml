@@ -4,6 +4,61 @@
 		<loc>http://pokerg.github.io/</loc>
 	</url>
 	<url>
+		<loc>http://pokerg.github.io/OS/HITOSExperiment1-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%BC%95%E5%AF%BC/</loc>
+		<lastmod>2014-09-27</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+		<loc>http://pokerg.github.io/鬼谷子/%E6%8A%B5%E5%B7%87--%E9%AC%BC%E8%B0%B7%E5%AD%90%E7%AC%AC%E5%9B%9B%E7%AF%87/</loc>
+		<lastmod>2013-11-28</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+		<loc>http://pokerg.github.io/阴符经/%E9%98%B4%E7%AC%A6%E7%BB%8F%E5%85%A8%E6%96%87/</loc>
+		<lastmod>2013-11-24</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+		<loc>http://pokerg.github.io/鬼谷子/%E5%86%85%E6%A5%97--%E9%AC%BC%E8%B0%B7%E5%AD%90%E7%AC%AC%E4%B8%89%E7%AF%87/</loc>
+		<lastmod>2013-11-23</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+		<loc>http://pokerg.github.io/Programming Language/%E9%80%9A%E9%81%93%E9%98%9F%E5%88%97/</loc>
+		<lastmod>2013-11-16</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+		<loc>http://pokerg.github.io/Programming Language/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC%E9%A1%BA%E5%BA%8F/</loc>
+		<lastmod>2013-11-15</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+		<loc>http://pokerg.github.io/鬼谷子/%E5%8F%8D%E5%BA%94--%E9%AC%BC%E8%B0%B7%E5%AD%90%E7%AC%AC%E4%BA%8C%E7%AF%87/</loc>
+		<lastmod>2013-11-10</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+		<loc>http://pokerg.github.io/鬼谷子/%E6%8D%AD%E9%98%96--%E9%AC%BC%E8%B0%B7%E5%AD%90%E5%BC%80%E7%AF%87/</loc>
+		<lastmod>2013-11-08</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+		<loc>http://pokerg.github.io/Programming Language/Go%E7%AE%80%E5%8D%95%E7%9A%84%E4%B8%8B%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/</loc>
+		<lastmod>2013-10-30</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+		<loc>http://pokerg.github.io/Programming Language/%E5%B0%86json%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5mongodb--goruntine/</loc>
+		<lastmod>2013-10-21</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
+		<loc>http://pokerg.github.io/Programming Language/%E5%B0%86json%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5mongodb--Golang%E5%AE%9E%E7%8E%B0/</loc>
+		<lastmod>2013-10-20</lastmod>
+		<changefreq>weekly</changefreq>
+	</url>
+	<url>
 		<loc>http://pokerg.github.io/Programming Language/Go1.2-Release/</loc>
 		<lastmod>2013-09-22</lastmod>
 		<changefreq>weekly</changefreq>

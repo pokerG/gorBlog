@@ -92,288 +92,272 @@
 
 
 <div class="post">
-  <h3 class="title"><a href="/Programming Language/Go1.2-Release/">Go1.2 Release</a> <span class="date">2013-09-22</span></h3>
+  <h3 class="title"><a href="/OS/HITOSExperiment1-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%BC%95%E5%AF%BC/">HITOSExperiment1-操作系统的引导</a> <span class="date">2014-09-27</span></h3>
 
-  <p>&emsp;&emsp;Go1.2发布了，做了一些调整和改进，这里我就只谈谈几个跟我目前关系比较大的，其他的请去查看[release notes](&ldquo;http://tip.golang.org/doc/go1.2&rdquo;)</p>
+  <p>##实验内容##</p>
 
-<h1>nil 的使用</h1>
+<p>改写bootsect.s主要完成如下功能：</p>
 
-<p>&emsp;&emsp;在Go1.0中 例如：</p>
+<ol>
+<li>bootsect.s能在屏幕上打印一段提示信息“XXX is booting&hellip;”，其中XXX是你给自己的操作系统起的名字，例如LZJos、Sunix等（可以上论坛上秀秀谁的OS名字最帅，也可以显示一个特色logo，以表示自己操作系统的与众不同。）</li>
+</ol>
 
-<pre><code>type T struct {
-    X [1&lt;&lt;24]byte
-    Field int32
+<p>改写setup.s主要完成如下功能：</p>
+
+<ol>
+<li>bootsect.s能完成setup.s的载入，并跳转到setup.s开始地址执行。而setup.s向屏幕输出一行&rdquo;Now we are in SETUP&rdquo;。</li>
+<li>setup.s能获取至少一个基本的硬件参数（如内存参数、显卡参数、硬盘参数等），将其存放在内存的特定地址，并输出到屏幕上。</li>
+<li>setup.s不再加载Linux内核，保持上述信息显示在屏幕上即可。</li>
+</ol>
+
+<p>####第一个非常简单，而且在实验指导书里写的很清楚了####</p>
+
+<p><pre><code>
+    ! 首先读入光标位置
+    mov ah,#0x03<br />
+    xor bh,bh
+    int 0x10</p>
+
+
+  <div class="more">
+    <a href="/OS/HITOSExperiment1-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%BC%95%E5%AF%BC/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/鬼谷子/%E6%8A%B5%E5%B7%87--%E9%AC%BC%E8%B0%B7%E5%AD%90%E7%AC%AC%E5%9B%9B%E7%AF%87/">抵巇--鬼谷子第四篇</a> <span class="date">2013-11-28</span></h3>
+
+  <p><p>&emsp;&emsp;本篇不像其他各篇，从一些微观和具体操作入手，这篇作者是站在一个宏观的角度，来对问题进行阐述和应对方法。</p></p>
+
+<p>&emsp;&emsp;巇，就是裂缝，抵巇就是通过抵御来使其得以恢复秩序，一种办法是弥补，另一种就是破而后立。这在古代确实是惊天之语。</p>
+
+<p>&emsp;&emsp;&ldquo;经起秋毫之末，挥之于太山之本。“千里之堤，溃于蚁穴就是这个道理。“自天地之合离终始，必有巇隙，不可不察也”，切记切记，“察之以捭阖”，我们既要放宽心态，又要注意小心谨慎。</p>
+
+
+  <div class="more">
+    <a href="/鬼谷子/%E6%8A%B5%E5%B7%87--%E9%AC%BC%E8%B0%B7%E5%AD%90%E7%AC%AC%E5%9B%9B%E7%AF%87/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/阴符经/%E9%98%B4%E7%AC%A6%E7%BB%8F%E5%85%A8%E6%96%87/">阴符经全文</a> <span class="date">2013-11-24</span></h3>
+
+  <p><p>&emsp;&emsp;第一次看到《阴符经》是在《大秦帝国-国命纵横》，当时觉得读起来特别有感觉，所以就摘录了下来，早读的时候没事干就背了下来，其实当时只是隐隐约约明白一点，然后想彻底的了解，但是到图书馆找没有相关的书籍，而且当时是寄宿在学校，上网也不是很方便，久而久之也就忘了这回事，后来无一中在南怀瑾的《老子他说》中又看到了，就到网上搜了下，发现以前在《大秦帝国》上竟然引用的是全文！！（我一直以为是片段），顿时觉得这本书不可不读，就买了本《阴符经集释》，因为前一段时间比较忙，也没有怎么看，前几天中午的时候闲来没事，随手翻了翻，就被其吸引了。</p></p>
+
+<p>&emsp;&emsp;这里我就先默写一遍，以表对其的尊重。</p>
+
+<p>&emsp;&emsp;观天之道，执天之行，尽矣。天有五贼，见之者昌。五贼在心，施行于天，宇宙在乎手，万化生乎身。<br/>
+&emsp;&emsp;天性，人也；人心，机也。立天之道，以定人也。<br/>
+&emsp;&emsp;天发杀机，移星易宿；地发杀机，龙蛇起路；人发杀机，天地反覆；天人合发，万化定基。<br/>
+&emsp;&emsp;性有巧拙，可以伏藏。九窍之邪，在乎三要，可以动静。火生于木，祸发必克；奸生于国，时动必溃。知之修炼，谓之圣人。<br/>
+&emsp;&emsp;天生天杀，道之理也。天地，万物之盗；万物，人之盗。三盗既宜，三才既安。故曰：食其时，百骸理；动其机，万化安。人知其神之神，不知不神之所以神也。日月有数，大小有定，圣功生焉，神明出焉。其盗机也，天下莫能见，莫能知。君子得之固躬，小人得之轻命。<br/>
+&emsp;&emsp;瞽者善听，聋者善视。绝利一源，用师十倍；三反昼夜，用师万倍。心生于物，死于物，机在目。天之无恩而大恩生，雷厉风行，莫不蠢然。<br/>
+&emsp;&emsp;至乐性馀，至静则廉。天之至私，用之至公。禽之制在炁。死者生之根，生者死之根。恩生于害，害生于恩。愚人以天地文理圣，我义时物文理哲。<br/>
+&emsp;&emsp;人以愚虞圣，我以不愚虞圣。人以奇期圣，我以不奇期圣。故曰：沉水入火，自取灭亡。自然之道静，故天地万物生。天地之道浸，故阴阳胜。阴阳相推，而变化顺矣。<br/>
+&emsp;&emsp;是故圣人知自然之道不可违，因而制之。至静之道，律历所不能契。爰有奇器，是生万象，八卦甲子，神机鬼藏。阴阳相胜之术，昭昭乎进乎象矣。</p>
+
+
+  <div class="more">
+    <a href="/阴符经/%E9%98%B4%E7%AC%A6%E7%BB%8F%E5%85%A8%E6%96%87/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/鬼谷子/%E5%86%85%E6%A5%97--%E9%AC%BC%E8%B0%B7%E5%AD%90%E7%AC%AC%E4%B8%89%E7%AF%87/">内楗--鬼谷子第三篇</a> <span class="date">2013-11-23</span></h3>
+
+  <p>&emsp;&emsp;“内”即使让人采取自己的计策,&ldquo;楗“就是设法坚持自己的计策，”内楗“连在一起，就是内心思想相合。</p>
+
+<p>&emsp;&emsp;人们之间可能距离很近，但是关系却很疏远，而距离很远，关系却可能很亲密，这是应为内心相知程度的不同所致。这都源于平时的结交。把握住对方的心理，就可以”若蚨母之从子也，出无间，入无朕“。所以说内楗术的核心就是把握对方的心理。内楗术是关于献策的方法，虽然文中大多数都是向君主，我们现在可能不存在这个问题，但是让人心悦诚服的接受我们的意见这点来说，内楗术还是非常有用的。</p>
+
+<p>&emsp;&emsp;“欲说者务隐度，计事者务循顺”，想要游说的话，务必要先揣度对方的心理；准备献策的，务必因势利导，顺其自然。“事有不合者，圣人不为谋也”这点一定要切记。</p>
+
+<p>&emsp;&emsp;&ldquo;得其情乃制其术“一定要在了解情况后再确定方法。</p>
+
+<p>&emsp;&emsp;最后讲的是进退之道，关键还是要“莫知所为”，才行。</p>
+
+
+  <div class="more">
+    <a href="/鬼谷子/%E5%86%85%E6%A5%97--%E9%AC%BC%E8%B0%B7%E5%AD%90%E7%AC%AC%E4%B8%89%E7%AF%87/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/Programming Language/%E9%80%9A%E9%81%93%E9%98%9F%E5%88%97/">通道队列</a> <span class="date">2013-11-16</span></h3>
+
+  <pre><code>&lt;p&gt;&amp;emsp;&amp;emsp;这是《代码的未来》中的一个例子。&lt;/p&gt;
+</code></pre>
+
+<pre><code>package main
+
+import &quot;fmt&quot;
+
+const ngoroutine = 10000
+
+func f(left, right chan int) {
+    left &lt;- 1 + &lt;-right
+}
+func main() {
+    leftmost := make(chan int)
+    var left, right chan int = nil, leftmost
+    for i := 0; i &lt; ngoroutine; i++ {
+        left, right = right, make(chan int)
+        go f(left, right)
+    }
+    right &lt;- 0
+    fmt.Println(&lt;-leftmost)
+}
+</code></pre>
+
+
+  <div class="more">
+    <a href="/Programming Language/%E9%80%9A%E9%81%93%E9%98%9F%E5%88%97/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
+  <h3 class="title"><a href="/Programming Language/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC%E9%A1%BA%E5%BA%8F/">表达式求值顺序</a> <span class="date">2013-11-15</span></h3>
+
+  <p>&emsp;&emsp;原文来自于<a href="http://dave.cheney.net/2013/11/15/evaluation-order-oddity">http://dave.cheney.net/<sup>2013</sup>&frasl;<sub>11</sub>/15/evaluation-order-oddity</a></p>
+
+<p>&emsp;&emsp;先来看这段代码</p>
+
+<pre><code>package main
+
+import &quot;fmt&quot;
+
+type T struct {
+        i int
+}
+
+func (t *T) readInt() int {
+        t.i += 4
+        return 42
 }
 
 func main() {
-    var x *T
-    ...
-} 
-</code></pre>
-
-<p>&emsp;&emsp;这个nil 指针 x 可以访问非法内存， x.Field 可以访问 1&lt;&lt;24的内存.在Go1.2中 编译器会确保不会错误的使用nil 指针。</p>
-
-
-  <div class="more">
-    <a href="/Programming Language/Go1.2-Release/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/History/%E6%96%87%E6%98%8E%E7%9A%84%E7%BF%85%E8%86%80/">文明的翅膀</a> <span class="date">2013-09-04</span></h3>
-
-  <p>&emsp;&emsp;历史的进程是残酷的。上了“文明毁灭黑名单”的有古埃及，巴比伦，哈拉巴，克里特，奥尔梅克，赫梯，波斯，玛雅等等，不下二三十中。</p>
-
-<p>&emsp;&emsp;绵延不绝的是中华文明起死回生的则是希腊-罗马文明。何以如此？这是一个“斯芬克斯之谜”。易中天在《易中天中华史-奠基人》中揭示了这个谜底。这篇文章虽然观点并不是很新颖，但是从角度上来说，让我读起来感觉很有趣。</p>
-
-<p>&emsp;&emsp;斯芬克斯，是希腊人对狮身人面像的称呼。不过在希腊的斯芬克斯却又两只翅膀。这就比古埃及的那个家伙，显得轻盈娟修。翅膀，是重要的。没有翅膀就不能飞。文明没有翅膀，就只能原地踏步，最终只得陨落。但是怎样飞翔，却要看是什么样的翅膀。</p>
-
-<p>&emsp;&emsp;中华的翅膀，是忧患心理和乐观态度。</p>
-
-<p>&emsp;&emsp;忧患是我们民族文化的底色。从《诗·小雅·小旻》“战战兢兢，如临深渊，如履薄冰“，到孟子的“生于忧患，死于安乐”，再到《义勇军进行曲》，忧患意识贯穿来整个中华史。</p>
-
-<p>&emsp;&emsp;但是我们民族优势乐观的。我们相信“天遂人愿”，相信“善恶有报”，相信“事在人为”。因此，我们“不改其乐”，哪怕“自得其乐”,也总归”乐在其中“。</p>
-
-<p>&emsp;&emsp;一忧一乐，从制度上来说就是有礼有乐。礼就是“理”，伦理，秩序，体现忧患；乐（le）就是“乐”（yue），讲快乐，讲和谐，造就乐观。</p>
-
-<p>&emsp;&emsp;希腊的翅膀，是科学精神和艺术气质。</p>
-
-<p>&emsp;&emsp;希腊人的科学不是实用主义的。他们“为思想而思想，为科学而科学”。所以他们能把埃及人用于测量土地和修建金字塔的技术，变成几何学；也能把巴比伦的占星术，变成天文学。</p>
-
-<p>&emsp;&emsp;与此同时，希腊人又极具艺术气质。正如马克思所说，希腊人是”正常的儿童“，所以”为艺术而艺术，为审美而审美“。这种纯粹，使他们即使在纵欲和淫乐，也毫无负罪感。</p>
-
-
-  <div class="more">
-    <a href="/History/%E6%96%87%E6%98%8E%E7%9A%84%E7%BF%85%E8%86%80/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/Programming Language/jekyllTogor/">jekyllTogor</a> <span class="date">2013-09-03</span></h3>
-
-  <p>&emsp;&emsp;前几天在Github上看到gor——Go编写的静态博客引擎,顿时有了不小的兴趣，就试了一下</p>
-
-<p>&emsp;&emsp;先说说我的感受吧（帮gor做做广告了），首先它的安装真的很简单，作为静态语言，只需要编译成可执行文件就可使用，go的工具链很方便的就能实现，（具体安装方法可以参考它的<a href="https://github.com/wendal/gor">主页</a>.如果你想全局使用的话，将它路径加到$PATH里就行了，这个就不用多说了。当时装jekyll时真是崩溃死了，没学过ruby，先得装ruby，刚开始装的是2.0,然后装jekyll，反正也看不懂，就跟着别人的来，一直出问题，最后用尽各种方法都不行，花了有两个多小时吧，最后灵光一闪，是不是ruby的版本有问题。。然后换成了1.9.3.最后终于成功了。。！！真是崩溃的要死。gor的第二个优点就是速度快，系统级语言确实是不能比的，而且它和jekyll的工作原理不同。这两点我认为是的对新手来说很重要的。</p>
-
-<p>&emsp;&emsp;当然上述其实不是本文的重点（汗。。）。gor 的 元数据 和 jekyll的有点区别。我的Blog虽然不多。但要是一个个手动改的话，也是很麻烦的。作为coder，目的是实现自动化，这种事当然不能这么干，同时也是为了练习Golang，所以就写了个<a href="https://github.com/pokerG/jekyllTogor">脚本</a></p>
-
-<p>&emsp;&emsp;通过写这个脚本，发现了一些问题和情况。好久没有写程序了，手速下降的不行行了。。关键是对Go的不熟练，这个脚本其实是很简单的，但是我写了3个小时把。理论掌握的多，实践少。</p>
-
-<p>&emsp;&emsp;接下来为了改善这种情况，一方面是接着分析Go的标准库，看看Go的创始者的code是怎么写的,这是提高能力的一个关键方法。还有就是练习练习再练习。</p>
-
-<p>&emsp;&emsp;接下来主要先分析这几部分：</p>
-
-<ol>
-<li>string</li>
-<li>file</li>
-<li>regexp</li>
-<li>refelect</li>
-</ol>
-
-
-  <div class="more">
-    <a href="/Programming Language/jekyllTogor/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-bufio/">Go标准库-bufio</a> <span class="date">2013-08-28</span></h3>
-
-  <p>&emsp;&emsp;bufio包实现了带缓存的I/O操作。封装了一个io.Reader或io.Writer对象，返回一个具有缓存和文本读写的对象。</p>
-
-<h1>bufio.go</h1>
-
-<pre><code>//实现了带缓存的
-type Reader struct{
-        buf          []byte
-        rd           io.Reader
-        r, w         int
-        err          error
-        lastByte     int
-        lastRuneSize int
-}
-
-//NewReaderSize将rd封装成一个具有size大小的bufio.Reader对象
-//如果rd的类型就是bufio.Reader且size &gt; minReadBufferSize = 16 直接返回
-//size的大小要大于 minReadBufferSize 否则 返回大小为minReadBufferSize的bufio.Reader
-func NewReaderSize(rd io.Reader, size int) *Reader
-</code></pre>
-
-
-  <div class="more">
-    <a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-bufio/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-pipe/">Go标准库-io-pipe</a> <span class="date">2013-08-28</span></h3>
-
-  <p>&emsp;&emsp;pipe中基本的struct是 pipe</p>
-
-<pre><code>//pipe 是 PipeReader 和 PipeWriter 的底层实现
-type pipe struct {
-    //sync.Mutex 是 一个并发时用的锁，这个以后在sync包中会讲到
-    //rl/wl 控制同时只有一个读取器或写入器
-    rl    sync.Mutex 
-    wl    sync.Mutex 
-    l     sync.Mutex //用于保护其他字段
-    data  []byte     //管道中的数据
-    // r/wwait 控制读取器或写入器等待  
-    rwait sync.Cond  
-    wwait sync.Cond  
-    // r/werr 如果读取器（写入器）关闭，该错误会被Write（Read）方法返回
-    rerr  error      
-    werr  error     
-}
-
-//ErrClosePipe 用于返回对于关闭的管道的操作错误
-var ErrClosedPipe = errors.New(&quot;io: read/write on closed pipe&quot;)
-</code></pre>
-
-
-  <div class="more">
-    <a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-pipe/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-multi/">Go标准库-io-multi</a> <span class="date">2013-08-28</span></h3>
-
-  <pre><code>//接受多个Reader/Writer 
-//返回一个Reader/Writer
-//操作这个Reader/Writer 就相当于操作多个Reader/Writer
-func MultiReader(readers ...Reader) Reader {
-    return &amp;multiReader{readers}
-}
-
-func MultiWriter(writers ...Writer) Writer {
-    return &amp;multiWriter{writers}
-}
-</code></pre>
-
-<p>&emsp;&emsp;multi中定义了两个内部struct，multiReader 和 multiWriter 分别实现了 io.Reader 和 io.Writer</p>
-
-<pre><code>type multiReader struct {
-    readers []Reader
-}
-type multiWriter struct {
-    writers []Writer
+        var d = T{i: 200}
+        end := d.i - 4 + d.readInt()
+        fmt.Println(end)
 }
 </code></pre>
 
 
   <div class="more">
-    <a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-multi/" class="btn">read more..</a>
+    <a href="/Programming Language/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC%E9%A1%BA%E5%BA%8F/" class="btn">read more..</a>
   </div>
 </div>
 
 <div class="post">
-  <h3 class="title"><a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-ioutil/">Go标准库-io-ioutil</a> <span class="date">2013-08-28</span></h3>
+  <h3 class="title"><a href="/鬼谷子/%E5%8F%8D%E5%BA%94--%E9%AC%BC%E8%B0%B7%E5%AD%90%E7%AC%AC%E4%BA%8C%E7%AF%87/">反应--鬼谷子第二篇</a> <span class="date">2013-11-10</span></h3>
 
-  <p>&emsp;&emsp;ioutil封装了一些常用的io操作</p>
-
-<pre><code>//读取r中所有数据
-//返回 读取的数据 和 error
-//读取成功的话 返回nil 而不是 EOF
-//ReadAll 实际上是通过bytes.Buffer的ReadFrom()实现的
-func ReadAll(r io.Reader) ([]byte, error)
-
-//读取文件中的所有数据
-//返回 读取的数据 和 error
-//读取成功的话 返回nil 而不是 EOF
-//ReadFile 和 ReadAll 都是通过readAll()实现的
-//ReadFile会先判断文件的大小，给bytes.Buffer一个预定义容量，避免额外分配内存。
-func ReadFile(filename string) ([]byte, error)
-
-//将 data 写入 文件
-//如果文件不存在，将以perm权限创建文件
-func WriteFile(filename string, data []byte, perm os.FileMode) error
+  <pre><code>&lt;p&gt;&amp;emsp;&amp;emsp;&amp;ldquo;反应&amp;rdquo; 字典的解释是：事情所引起得意见，态度或行动。鬼谷子所论的反应与此略有不同。这里的反应是两种不同的对策。反，通”返“，反过来，反听之，反审之。这里的”反“更多的是指反复了解，反复观察。”应“对别人的态度所做的对策。&lt;/p&gt;
 </code></pre>
+
+<p>&emsp;&emsp;开篇鬼谷子数次强调“反覆”的重要。许多事情往往需要反复探索才能把握。</p>
+
+<p>&emsp;&emsp;如何探索呢？一是抓住对方的话外音，“言有象，事有比”，正因为有形象和比喻，所以要观察隐藏在言辞下面的含义。二是诱导，就像捕猎一样，多张一些网，等待野兽出没，伺机捕获之。与人的对话也一样。“以象动之，以报其心，见其情，随而牧之”</p>
+
+<p>&emsp;&emsp;第三段着重讲解了第二种方法。想要通过反听对方的言论，来获取信息。必须有一定方法。“变象比，必有反辞，以还听之”，我们要用相反的言论来激发对手。</p>
+
+<p>&emsp;&emsp;要使用这种方法的关键是使自己平静下来，不能乱了分寸，忘了自己的目的。虽然有时对方所谈不是我们急于知道的，但是“见微知类”。就像刺探敌情而深居敌境一般，要首先估计敌人的能力，其次摸清敌人的意图，“如腾蛇之所指”一样精准。“若羿之引失”百发百中。</p>
+
+<p>&emsp;&emsp;所以要想掌握情况，要从了解自己开始，然后才能了解别人（未看出前后逻辑在哪）。了解了别人才能像比目鱼一样亲近。就可以透过对方的外形探知内心。“未见形，圆以道之；既见形，方以事之”在情况不明朗的时候，用智慧诱惑对方，在情况明朗后，用谋略战胜对方。“己不先定，牧人不正”，自己不先定下策略，就无法正确领导别人。</p>
+
+<p>&emsp;&emsp;《反应》一篇的反应包括两方面一方面用自己的行为引发对方的反应，二是根据对方的反应作出对策。</p>
+
+<p>&emsp;&emsp;说实话，对于这篇没有看得太懂，尤其是最后一段的逻辑关系没太理清。古人的智慧果然需要我们细心揣摩啊。</p>
 
 
   <div class="more">
-    <a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-ioutil/" class="btn">read more..</a>
+    <a href="/鬼谷子/%E5%8F%8D%E5%BA%94--%E9%AC%BC%E8%B0%B7%E5%AD%90%E7%AC%AC%E4%BA%8C%E7%AF%87/" class="btn">read more..</a>
   </div>
 </div>
 
 <div class="post">
-  <h3 class="title"><a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-io/">Go标准库-io-io</a> <span class="date">2013-08-27</span></h3>
+  <h3 class="title"><a href="/鬼谷子/%E6%8D%AD%E9%98%96--%E9%AC%BC%E8%B0%B7%E5%AD%90%E5%BC%80%E7%AF%87/">捭阖--鬼谷子开篇</a> <span class="date">2013-11-08</span></h3>
 
-  <p>&emsp;&emsp;io包为I/O原语提供了基本的接口。它主要包装了这些原语的已有实现。由于这些接口和原语以不同的实现包装了低级操作，因此除非另行通知，否则客户端不应假定它们对于并行执行是安全的。</p>
-
-<p>&emsp;&emsp;首先我们来看几个variables，这几个variables都是读写操作中可能出现的情况</p>
-
-<pre><code>//ErrShortWrite 用于一个write少于规定的字符数，但是又不能返回一个明确的错误时
-var ErrShortWrite = errors.New(&quot;short write&quot;)
-
-//ErrShortBuffer 用于一个read要求的字符数多于所能提供的字符
-var ErrShortBuffer = errors.New(&quot;short buffer&quot;)
-
-//EOF 就是end-of-file 不用多解释，但是如果EOF发生在一个结构数据流中，error就不应该是EOF
-var EOF = errors.New(&quot;EOF&quot;)
-
-//ErrUnexpectedEOF 意味着EOF发生在读取一个固定数据块或者数据结构的中间
-var ErrUnexpectedEOF = errors.New(&quot;unexpected EOF&quot;)
-
-//ErrNoProgress 发生在多个io.Reader调用Read()方法，却没有返回任何数据或错误时
-//通常作为一个破损的io.Reader实现的标志
-var ErrNoProgress = errors.New(&quot;multiple Read calls return no data or error&quot;)
+  <pre><code>&lt;p&gt;&amp;emsp;&amp;emsp;《捭阖》作为《鬼谷子》的首篇，它的地位是无需多言的。它不仅是种纵横术，更是《鬼谷子》的提纲和思想的核心。&lt;/p&gt;
 </code></pre>
+
+<p>&emsp;&emsp;开篇“观阴阳之开阖以命物，知存亡之门户”，便把捭阖提到至高无上的地位。捭，开也，阳也；阖，闭也，阴也。它与中国最古老的哲学易经是相符的。</p>
+
+<p>&emsp;&emsp;&ldquo;离合有守，先从其志&rdquo;这句可以算是全文的一个核心。进行任何纵横术的根本点是要守住，即首先抓住对方的思想。这也是”存亡之门户“之所在。</p>
+
+<p>&emsp;&emsp;”即欲捭之，贵周；即欲阖之，贵密“这点出了进行捭阖的前提。周详考虑，藏而不露，巧妙运用，合乎道矣。</p>
+
+<p>&emsp;&emsp;&ldquo;口者，心之门户也，心者，神之主也”。人的种种情感，思维谋略等等皆由此两者表现。“故关之以捭阖，制之以出入。”</p>
+
+<p>&emsp;&emsp;关于捭阖，鬼谷子强调了几点：1.物分阴阳。阳即开始，阴即终结。用有利来开启谈话，用不利来制止其谋略。2.”与阳言者，依崇高。与阴言者，依卑小“，通俗来讲就是见人说人话，见鬼说鬼话。</p>
+
+<p>&emsp;&emsp;捭阖的关键在于隐藏自己的观点，诱出对方的观点，从而对症下药。</p>
+
+<p>&emsp;&emsp;《鬼谷子》这本书可以说思想极为深邃，《捭阖》这篇变化无穷，正如其所言。字字千钧，读完回味无穷。本人浅陋，只能理解到这里。</p>
 
 
   <div class="more">
-    <a href="/Programming Language/Go%E6%A0%87%E5%87%86%E5%BA%93-io-io/" class="btn">read more..</a>
+    <a href="/鬼谷子/%E6%8D%AD%E9%98%96--%E9%AC%BC%E8%B0%B7%E5%AD%90%E5%BC%80%E7%AF%87/" class="btn">read more..</a>
   </div>
 </div>
 
 <div class="post">
-  <h3 class="title"><a href="/Programming Language/interface/">interface</a> <span class="date">2013-08-26</span></h3>
+  <h3 class="title"><a href="/Programming Language/Go%E7%AE%80%E5%8D%95%E7%9A%84%E4%B8%8B%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/">Go简单的下载器实现</a> <span class="date">2013-10-30</span></h3>
 
-  <blockquote>
-<p>If I could export one feature of Go into other languages, it would be interfaces.
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;———Rob Pike</p>
+  <p><p>&emsp;&emsp;用Go来实现下载功能还是很简单的。直接看代码吧</p></p>
 
-<p>&emsp;&emsp;interface作为Golang的整个类型系统的基石，让Golang在基础编程哲学的探索上达到前所未有的高度。&gt;&emsp;&emsp;&emsp;&emsp;——《Go语言编程》</p>
-</blockquote>
-
-<p>&emsp;&emsp;接口是Java引入的特性。在软件工程上占有重要地位。而Golang变革了接口的概念。</p>
-
-<p>&emsp;&emsp;我们考虑这样一个情况，有两个struct都实现了一些非常有用的小子集中的相关方法，这时有办法操作两个struct的任意一个就显得非常有用。那么我们该怎么办呢？这就是接口的作用。</p>
-
-<pre><code>type s1 struct{
-    ...//一些属性
+<pre><code>func download(url string){
+    resp,err := http.Get(url)
+    handleErr(err)
+    defer resp.Body.Close()
+    body,err := ioutil.ReadAll(resp.Body)
+    handleErr(err)
+    err := ioutil.WriteFile(&quot;./test&quot;,body,0666)
+    handleErr(err)
 }
-type s2 struct{
-    ...//一些属性
-｝
-func (a *s1)foo(){
-    ...//具体实现1
-}
-func (b *s2)foo(){
-    ...//具体实现2
-｝
 </code></pre>
+
+<p>&emsp;&emsp;核心部分就如此简单，剩下的就自己发挥啦。 比如断点续传什么的。</p>
 
 
   <div class="more">
-    <a href="/Programming Language/interface/" class="btn">read more..</a>
+    <a href="/Programming Language/Go%E7%AE%80%E5%8D%95%E7%9A%84%E4%B8%8B%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/" class="btn">read more..</a>
   </div>
 </div>
 
 <div class="post">
-  <h3 class="title"><a href="/Philosophy/%E8%8B%A6%E9%9A%BE/">苦难</a> <span class="date">2013-08-24</span></h3>
+  <h3 class="title"><a href="/Programming Language/%E5%B0%86json%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5mongodb--goruntine/">将json文件导入mongodb--goruntine</a> <span class="date">2013-10-21</span></h3>
 
-  <p>&emsp;&emsp;面对社会悲剧，我们有理想、信念、正义感、崇高感支撑着我们，我们相信自己在精神上无比地优越于那迫害乃至毁灭我们的恶势力，因此我们可以含笑受难，慷慨赴死。我们是舞台上的英雄，哪怕眼前这个剧场里的观众全都浑浑噩噩，是非颠倒，我们仍有勇气把戏演下去，演给我们心目中绝对清醒公正的观众看，我们称这观众为历史、上帝或者良心。</p>
+  <p><p>&emsp;&emsp;接着上次的，因为数据比较大，单线程的话，速度实在不能忍，所以就要使用goruntine。</p></p>
 
-<p>&emsp;&emsp;可是，面对自然悲剧，我们有什么呢？这里没有舞台，只有空漠无际的苍穹。我们不是英雄，只是朝生暮死的众生。任何人间理想都抚慰不了生老病死的悲哀，在天灾人祸面前也谈不上什么正义感。当史前人类遭受大洪水的灭顶之灾时，当庞贝城居民被维苏威火山的岩浆吞没时，他们能有什么慰藉呢？地震,海啸，车祸，空难，瘟疫，绝症&hellip;&hellip;大自然的恶势力轻而易举地把我们或我们的亲人毁灭。我们面对的是没有灵魂的敌手，因而不能以精神的优越自慰，却愈发感到了生命的卑微。没有上帝来拯救我们，因为这灾难正是上帝亲手降下。我们愤怒，但无从泄愤。我们冤屈，但永无申冤之日。我们反抗，但我们的反抗孤立无助，注定失败。</p>
+<p>&emsp;&emsp;我们首先要看是哪里的速度过慢，从程序我们就可以看出主要是三个点：1.文件读取；2.正则表达式的处理；3.写入mongodb。所以就测试了一下，文件读取大约是几百毫秒，正则表达式的处理大约在2秒到4秒，而写入mongodb随文件的大小以及系统的情况，大约也是3到5秒，最慢能到10多秒。</p>
 
-<p>&emsp;&emsp;然而我们未必就因此倒下。也许，没有浪漫气息的悲剧是我们最本质的悲剧，不具有英雄色彩的勇气是我们最真实的勇气。在无可告慰的绝望中，我们咬牙挺住。我们挺立在那里，没有观众，没有证人，也没有期待，没有援军。我们不倒下，仅仅是因为我们不肯让自己倒下。我们以此维护了人的最高的也是最后的尊严————人在神面前的尊严。</p>
+<p>&emsp;&emsp;文件读取速度对整体影响不大，所以没必要再优化，而正则表达式使用的Go自带的引擎，所以，只有第三项可以做些什么，而且也就是它耗时最多。</p>
 
-<p>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;————周国平</p>
+<p>&emsp;&emsp; 因为我们是要处理一系列文件，所以这里就有了两种思路，第一种是每个文件的处理用一个goruntine，第二种是在写入mongodb时，每条记录使用一个goruntine。（当然更好是设计两层模型,还没有尝试，就不说了。）。</p>
+
+<p>&emsp;&emsp;首先，我们来看看第二种，</p>
+
+<pre><code>chs = make([]chan int, len(sdata))
+
+for i, s := range chs {
+    chs[i] = make(chan int)
+    go func(s string, i int) {
+        var inter interface{}
+            err := json.Unmarshal([]byte(s), &amp;inter)
+            handleError(err)
+            err = c.Insert(inter)
+            handleError(err)
+        chs[i] &lt;- 1
+    }(s, i)
+}
+for i, ch := range chs {
+    &lt;-ch
+    fmt.Print(i, &quot;,&quot;)
+}
+</code></pre>
 
 
   <div class="more">
-    <a href="/Philosophy/%E8%8B%A6%E9%9A%BE/" class="btn">read more..</a>
+    <a href="/Programming Language/%E5%B0%86json%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5mongodb--goruntine/" class="btn">read more..</a>
   </div>
 </div>
 
@@ -393,7 +377,7 @@ func (b *s2)foo(){
     </div> <!-- /container -->
 
     
-<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script src="//cdnjscn.b0.upaiyun.com/libs/prettify/r298/prettify.min.js"></script>
 <script>
   var pres = document.getElementsByTagName("pre");
   for (var i=0; i < pres.length; ++i) {

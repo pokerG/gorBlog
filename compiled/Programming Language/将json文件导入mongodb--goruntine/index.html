@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>将json文件导入mongodb--goruntine</title>
+  
+    <meta name="author" content="pokerG Hao">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/twitter/stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+ 
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">pokerG</a>
+          <ul class="nav">
+            
+              
+
+
+  <li><a href="/archive">Archive</a></li>
+
+
+            
+              
+
+
+  <li><a href="/tags">Tags</a></li>
+
+
+            
+              
+
+
+  <li><a href="/categories">Categories</a></li>
+
+
+            
+              
+
+
+  <li><a href="/pages">Pages</a></li>
+
+
+            
+              
+
+
+  <li><a href="/about">About Me</a></li>
+
+
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <div class="page-header">
+  <h1>将json文件导入mongodb--goruntine  <small>&#34;&#34;</small></h1>
+</div>
+
+<div class="row">
+  <div class="span8">
+    
+ <p>&emsp;&emsp;接着上次的，因为数据比较大，单线程的话，速度实在不能忍，所以就要使用goruntine。</p>
+
+<p>&emsp;&emsp;我们首先要看是哪里的速度过慢，从程序我们就可以看出主要是三个点：1.文件读取；2.正则表达式的处理；3.写入mongodb。所以就测试了一下，文件读取大约是几百毫秒，正则表达式的处理大约在2秒到4秒，而写入mongodb随文件的大小以及系统的情况，大约也是3到5秒，最慢能到10多秒。</p>
+
+<p>&emsp;&emsp;文件读取速度对整体影响不大，所以没必要再优化，而正则表达式使用的Go自带的引擎，所以，只有第三项可以做些什么，而且也就是它耗时最多。</p>
+
+<p>&emsp;&emsp; 因为我们是要处理一系列文件，所以这里就有了两种思路，第一种是每个文件的处理用一个goruntine，第二种是在写入mongodb时，每条记录使用一个goruntine。（当然更好是设计两层模型,还没有尝试，就不说了。）。</p>
+
+<p>&emsp;&emsp;首先，我们来看看第二种，</p>
+
+<pre><code>chs = make([]chan int, len(sdata))
+
+for i, s := range chs {
+    chs[i] = make(chan int)
+    go func(s string, i int) {
+        var inter interface{}
+            err := json.Unmarshal([]byte(s), &amp;inter)
+            handleError(err)
+            err = c.Insert(inter)
+            handleError(err)
+        chs[i] &lt;- 1
+    }(s, i)
+}
+for i, ch := range chs {
+    &lt;-ch
+    fmt.Print(i, &quot;,&quot;)
+}
+</code></pre>
+
+<p>&emsp;&emsp;这种方式，对于小一些的文件挺管用，但是当数据达到9000以上的时候，就会出现问题。我刚开始以为是以因为goruntine过多造成死锁了。所以我在for循环中加了一句</p>
+
+<pre><code>if i % 5000 == 0 ｛
+    time.Sleep(time.Second)
+}
+</code></pre>
+
+<p>&emsp;&emsp;又进行了测试，刚开始进行的挺好，但是处理一段时间后，使用 top 检测已经不占用cpu，但是程序却仍然卡在那里。然后我改成一个goruntine处理数条数据，   <code>chs = make([]chan int, len(sdata)/1000+1)</code>  仍然存在相同的问题。</p>
+
+<p>&emsp;&emsp;然后我觉得就算这个文件不执行了，把其他先处理了吧。。然后就加入了超时机制（利用的就是我上次说道的channel的close特性）。测试后我才发现问题所在，超时后是从等待中跳出了。但是它竟然卡在了函数的结尾(后面无论加多少东西都能执行，但是它返回不到调用它的函数！！），然后我就崩溃了。我想着问题可能是mgo这个驱动的问题或者是Go本身垃圾回收机制的问题。暂时解决不了，所以先放下了（这里先mark下，我觉得这种思路没有问题，等过几天闲了再想办法）</p>
+
+<p>&emsp;&emsp;我就去尝试了另一种思路，刚开始没考虑太多，直接每个文件一个goruntine就这么写了。然后在本地测试了大约18个文件，速度一下子从2分6秒降到了26秒。然后我就放到服务器上去测试，问题就来了。由于文件太多（测试用的已经700，而且平均几十M),几秒之内内存就被占满，直接被内核kill掉了。。（囧）没办法，只能想办法分批处理了。</p>
+
+<p>&emsp;&emsp;首先，我用的是</p>
+
+<pre><code>if runtime.NumGoroutine() &gt; XX {
+    time.Sleep()
+}
+</code></pre>
+
+<p>&emsp;&emsp;这种方法会出现错误，我想NumGoroutine是总的协程数，mgo也大量使用了并发，所以我就使用了一个变量，来记录我申请的数量，使用原子操作</p>
+
+<pre><code>atomic.AddInt32(&amp;currentNum, 1)
+
+for atomic.LoadInt32(&amp;currentNum) &gt; 1 {
+    time.Sleep(time.Second * 30)
+}
+</code></pre>
+
+<p>&emsp;&emsp;但是还是出现了问题。最后我想到了一种方法。只开辟一个具体数量的channel 切片 <code>chs = make([]chan int, CHANNUM)</code>，然后同步所有的goruntine，然后再次分配。</p>
+
+<pre><code>if cnum == CHANNUM {
+    for _, ch := range chs {
+        &lt;-ch
+    }
+    cnum = 0
+}
+chs[cnum] = make(chan int)
+go UZip(filepath.Join(dirAbs, fileInfo.Name()), chs[cnum])          
+cnum += 1
+</code></pre>
+
+<p>&emsp;&emsp;但是还要注意一点，因为文件数量不一定是倍数关系，所以还要加以处理在调用Uzip()的后面加上</p>
+
+<pre><code>if i == len(fileInfos)-1 {
+    for i := 0; i &lt;= cnum; i++ {
+        &lt;-chs[i]
+    }
+    for _, ch := range chs {
+        close(ch)
+    }
+}
+</code></pre>
+
+<p>&emsp;&emsp;我把CHANNUM设为48，经过测试，仅用19分钟就处理完成，将近原来的五分之一。</p>
+
+<p>&emsp;&emsp;从这里就可以看出goruntine的强大，但是如果对原理理解的不透彻的话，使用中还是会有很多问题。</p>
+
+<p>&emsp;&emsp;我用go实现并发已经如此麻烦（当然跟我水平有关系），其他语言我已是无法想像。</p>
+
+<p>&emsp;&emsp;再说一个要注意的地方。使用channel必须用make为其分配空间。而且就算channel slice已经分配，你还需要为每个单独分配。否则无法正常工作。</p>
+
+<pre><code>chs := make([]chan int,10)
+for i,_ := range chs{
+    chs[i] = make([]chan int)
+    ...
+}
+</code></pre>
+
+<p>&emsp;&emsp;这两个版本的程序源码都在<a href="https://githubc.com/pokerG/GitArchiveUtils">https://githubc.com/pokerG/GitArchiveUtils</a></p>
+    <hr>
+    <div class="pagination">
+      <ul>
+        <ul>
+          
+            <li class="prev"><a href="/Programming Language/Go%E7%AE%80%E5%8D%95%E7%9A%84%E4%B8%8B%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/" title="Go简单的下载器实现">&larr; Previous</a></li>
+          
+          
+
+            <li><a href="/archive">Archive</a></li>
+
+          
+            <li class="next"><a href="/Programming Language/%E5%B0%86json%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5mongodb--Golang%E5%AE%9E%E7%8E%B0/" title="将json文件导入mongodb--Golang实现">Next &rarr;</a></li>
+          
+          
+        </ul>
+      </ul>
+    </div>
+    <hr>
+    
+<div id="disqus_thread"></div>
+<script>
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  </div>
+  
+  <div class="span4">
+    <h4>Published</h4>
+    <div class="date"><span>2013-10-21</span></div>
+    <br>
+    <h4>Categories</h4>
+    <ul class="tag_box">
+    
+      <li>
+  <a href="/categories/#Programming-Language-ref">Programming Language <span>18</span></a>
+</li>
+    
+    </ul>
+    <br>
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    
+      <li>
+  <a href="/tags/#Go-ref">Go <span>18</span></a>
+</li>
+    
+    </ul>
+  </div>
+</div>
+
+      </div>
+
+      <footer>
+        <p>&copy; pokerG Hao 2013 
+          with help from <a href="http://github.com/wendal/gor" target="_blank" title="Gor -- Fast Blog">Gor</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+		  and Idea from <a href="http://ruhoh.com" target="_blank" title="The Definitive Technical Blogging Framework">ruhoh</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+<script src="//cdnjscn.b0.upaiyun.com/libs/prettify/r298/prettify.min.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  var pluginUrl = '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-123-12']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+  </body>
+</html>

@@ -1,0 +1,81 @@
+---
+date: 2013-10-20
+layout:  post
+title:  "将json文件导入mongodb--Golang实现"
+tagline:  ""
+categories:
+-  Programming Language
+tags:
+- Go
+---
+
+<p>&emsp;&emsp;使用go语言将json文件导入mongodb中相对还是比较方便的。</p>
+
+<p>&emsp;&emsp;首先 我用的是 mgo 这个 驱动。 其次因为文件是gz压缩 的。所以我们得先解压。使用 go自带的pkg <code>compress/gzip</code> 就行。</p>
+
+<pre><code>fr, err := os.Open(fpath)
+handleError(err)
+defer fr.Close()
+
+fmt.Println(fr.Name())
+
+gr, err := gzip.NewReader(fr)
+handleError(err)
+</code></pre>
+
+<p>&emsp;&emsp;正常来说，这里直接 调用 <code>gr.Read()</code>就可以了。。但是由于我的文件比较大，而且 <code>ioutil.ReadAll()</code> 也不行 ，所以这里我使用了循环读入</p>
+
+<pre><code>// 因为 gr一次读入 读满的话是3800 - 4000个字符，
+// 所以BUFSIZE = 4000
+buf := make([]byte, BUFSIZE)
+var data []byte
+var num int = 0
+for {
+    n, err := gr.Read(buf)
+    data = append(data, buf[:n]...)
+    if err == io.EOF {
+        break
+    }
+    num += n
+    handleError(err)
+}
+</code></pre>
+
+<p>&emsp;&emsp; 如果只有 一个 类似<code>｛&quot;id&quot;:12434,&quot;name&quot;:foo}</code> 这样的数据话 直接</p>
+
+<pre><code>var inter interface{}
+err = json.Unmarshal([]byte(s), &amp;inter)
+handleError(err)
+c := session.DB(&quot;test&quot;).C(&quot;user&quot;)
+err = c.Insert(inter)
+</code></pre>
+
+<p>&emsp;&emsp;<strong>注意不能直接将数据写入DB，没有经过解码的话，存进去的将是ASCII码值</strong></p>
+
+<p>&emsp;&emsp;但是 如果是</p>
+
+<pre><code>｛&quot;id&quot;:12434,&quot;name&quot;:&quot;foo&quot;}
+｛&quot;id&quot;:12435,&quot;name&quot;:&quot;foo1&quot;}
+｛&quot;id&quot;:12436,&quot;name&quot;:&quot;foo2&quot;}  
+</code></pre>
+
+<p>&emsp;&emsp;使用 <code>json.Unmarshal()</code> 会发生错误，对于这种情况，我暂时还没想到其他办法，所以就使用了正则表达式，将其分割成[]string,然后再处理</p>
+
+<pre><code>reg, err := regexp.Compile(`[{].*[}][\n]`)
+handleError(err)
+
+sdata := reg.FindAllString(string(data), -1)
+fmt.Println(len(sdata))
+
+for _, s := range sdata {
+    var inter interface{}
+
+    err = json.Unmarshal([]byte(s), &amp;inter)
+    handleError(err)
+    c := session.DB(&quot;testGoBig&quot;).C(&quot;Event&quot;)
+    err = c.Insert(inter)
+
+}
+</code></pre>
+
+<p>&emsp;&emsp;这样就成功的将json文件导入了mongodb中。因为测试的数据比较大，（大约 2G) 所以 串行的话 大约要1个半小时，所以我又用了goruntine，下次说说其中遇到的坑和经验。</p>

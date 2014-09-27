@@ -1,0 +1,39 @@
+---
+date: 2013-11-16
+layout:  post
+title:  "通道队列"
+tagline:  ""
+categories:
+-  Programming Language
+tags:
+- Go
+---
+
+    <p>&emsp;&emsp;这是《代码的未来》中的一个例子。</p>
+
+<pre><code>package main
+
+import &quot;fmt&quot;
+
+const ngoroutine = 10000
+
+func f(left, right chan int) {
+    left &lt;- 1 + &lt;-right
+}
+func main() {
+    leftmost := make(chan int)
+    var left, right chan int = nil, leftmost
+    for i := 0; i &lt; ngoroutine; i++ {
+        left, right = right, make(chan int)
+        go f(left, right)
+    }
+    right &lt;- 0
+    fmt.Println(&lt;-leftmost)
+}
+</code></pre>
+
+<p>&emsp;&emsp;说来惭愧，第一眼竟没有看出这个程序的逻辑所在。</p>
+
+<p>&emsp;&emsp;经过好长时间的仔细阅读才发现，这个其实是一个累加过程。因为前面的channel一直是堵塞的，当main()中把 0 传递给 最后一个 right时，f()中<code>left&lt;-1+&lt;-right</code>将后一个channel中的值传给前一个，依次向前一个channel中传，最后传到leftmost中，所以最后输出的是 <strong>1000</strong></p>
+
+<p>&emsp;&emsp;这个程序有点像队列，也有点像堆栈，挺有意思的一段小代码，所以就记录下来了。</p>
