@@ -92,6 +92,35 @@
 
 
 <div class="post">
+  <h3 class="title"><a href="/OS/HITOSExperiment2-%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/">HITOSExperiment2-系统调用</a> <span class="date">2014-09-28</span></h3>
+
+  <p>##实验内容##</p>
+
+<p>此次实验的基本内容是：在Linux 0.11上添加两个系统调用，并编写两个简单的应用程序测试它们。</p>
+
+<p>####iam()####</p>
+
+<p>第一个系统调用是iam()，其原型为：</p>
+
+<p>int iam(const char * name);
+完成的功能是将字符串参数name的内容拷贝到内核中保存下来。要求name的长度不能超过23个字符。返回值是拷贝的字符数。如果name的字符个数超过了23，则返回“-1”，并置errno为EINVAL。</p>
+
+<p>在kernal/who.c中实现此系统调用。</p>
+
+<p>####whoami()####</p>
+
+<p>第二个系统调用是whoami()，其原型为：</p>
+
+<p>int whoami(char* name, unsigned int size);
+它将内核中由iam()保存的名字拷贝到name指向的用户地址空间中，同时确保不会对name越界访存（name的大小由size说明）。返回值是拷贝的字符数。如果size小于需要的空间，则返回“-1”，并置errno为EINVAL。</p>
+
+
+  <div class="more">
+    <a href="/OS/HITOSExperiment2-%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
   <h3 class="title"><a href="/OS/HITOSExperiment1-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%BC%95%E5%AF%BC/">HITOSExperiment1-操作系统的引导</a> <span class="date">2014-09-27</span></h3>
 
   <p>##实验内容##</p>
@@ -320,44 +349,6 @@ func main() {
 
   <div class="more">
     <a href="/Programming Language/Go%E7%AE%80%E5%8D%95%E7%9A%84%E4%B8%8B%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/Programming Language/%E5%B0%86json%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5mongodb--goruntine/">将json文件导入mongodb--goruntine</a> <span class="date">2013-10-21</span></h3>
-
-  <p><p>&emsp;&emsp;接着上次的，因为数据比较大，单线程的话，速度实在不能忍，所以就要使用goruntine。</p></p>
-
-<p>&emsp;&emsp;我们首先要看是哪里的速度过慢，从程序我们就可以看出主要是三个点：1.文件读取；2.正则表达式的处理；3.写入mongodb。所以就测试了一下，文件读取大约是几百毫秒，正则表达式的处理大约在2秒到4秒，而写入mongodb随文件的大小以及系统的情况，大约也是3到5秒，最慢能到10多秒。</p>
-
-<p>&emsp;&emsp;文件读取速度对整体影响不大，所以没必要再优化，而正则表达式使用的Go自带的引擎，所以，只有第三项可以做些什么，而且也就是它耗时最多。</p>
-
-<p>&emsp;&emsp; 因为我们是要处理一系列文件，所以这里就有了两种思路，第一种是每个文件的处理用一个goruntine，第二种是在写入mongodb时，每条记录使用一个goruntine。（当然更好是设计两层模型,还没有尝试，就不说了。）。</p>
-
-<p>&emsp;&emsp;首先，我们来看看第二种，</p>
-
-<pre><code>chs = make([]chan int, len(sdata))
-
-for i, s := range chs {
-    chs[i] = make(chan int)
-    go func(s string, i int) {
-        var inter interface{}
-            err := json.Unmarshal([]byte(s), &amp;inter)
-            handleError(err)
-            err = c.Insert(inter)
-            handleError(err)
-        chs[i] &lt;- 1
-    }(s, i)
-}
-for i, ch := range chs {
-    &lt;-ch
-    fmt.Print(i, &quot;,&quot;)
-}
-</code></pre>
-
-
-  <div class="more">
-    <a href="/Programming Language/%E5%B0%86json%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5mongodb--goruntine/" class="btn">read more..</a>
   </div>
 </div>
 
