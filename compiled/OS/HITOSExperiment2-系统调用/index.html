@@ -83,55 +83,57 @@
 
 <div class="row">
   <div class="span8">
-    
-##实验内容##
+    <p>##实验内容##</p>
 
-此次实验的基本内容是：在Linux 0.11上添加两个系统调用，并编写两个简单的应用程序测试它们。
+<p>此次实验的基本内容是：在Linux 0.11上添加两个系统调用，并编写两个简单的应用程序测试它们。</p>
 
-####iam()####
+<p>####iam()####</p>
 
-第一个系统调用是iam()，其原型为：
+<p>第一个系统调用是iam()，其原型为：</p>
 
-int iam(const char * name);
-完成的功能是将字符串参数name的内容拷贝到内核中保存下来。要求name的长度不能超过23个字符。返回值是拷贝的字符数。如果name的字符个数超过了23，则返回“-1”，并置errno为EINVAL。
+<p>int iam(const char * name);
+完成的功能是将字符串参数name的内容拷贝到内核中保存下来。要求name的长度不能超过23个字符。返回值是拷贝的字符数。如果name的字符个数超过了23，则返回“-1”，并置errno为EINVAL。</p>
 
-在kernal/who.c中实现此系统调用。
+<p>在kernal/who.c中实现此系统调用。</p>
 
-####whoami()####
+<p>####whoami()####</p>
 
-第二个系统调用是whoami()，其原型为：
+<p>第二个系统调用是whoami()，其原型为：</p>
 
-int whoami(char* name, unsigned int size);
-它将内核中由iam()保存的名字拷贝到name指向的用户地址空间中，同时确保不会对name越界访存（name的大小由size说明）。返回值是拷贝的字符数。如果size小于需要的空间，则返回“-1”，并置errno为EINVAL。
+<p>int whoami(char* name, unsigned int size);
+它将内核中由iam()保存的名字拷贝到name指向的用户地址空间中，同时确保不会对name越界访存（name的大小由size说明）。返回值是拷贝的字符数。如果size小于需要的空间，则返回“-1”，并置errno为EINVAL。</p>
 
-也是在kernal/who.c中实现。
+<p>也是在kernal/who.c中实现。</p>
 
-测试程序
+<p>测试程序</p>
 
-运行添加过新系统调用的Linux 0.11，在其环境下编写两个测试程序iam.c和whoami.c。最终的运行结果是：
+<p>运行添加过新系统调用的Linux 0.11，在其环境下编写两个测试程序iam.c和whoami.c。最终的运行结果是：</p>
 
-$ ./iam lizhijun
+<p>$ ./iam lizhijun
 $ ./whoami
-lizhijun 
+lizhijun</p>
 
+<p>##原理分析##</p>
 
-##原理分析##
+<p>关于<em>_syscalln</em> ， <em>int 0x80</em> 以及 <em>用户态和内核态之间的数据传递</em> 指导书上已经写的很清楚了，我只说说我们需要做的工作.</p>
 
-关于*_syscalln* ， *int 0x80* 以及 *用户态和内核态之间的数据传递* 指导书上已经写的很清楚了，我只说说我们需要做的工作.
-
-1. 在*include/unistd.h* 定义iam 和 whoami 的功能号
+<ol>
+<li>在<em>include/unistd.h</em> 定义iam 和 whoami 的功能号</li>
+</ol>
 
 <pre><code>
-#define __NR_ssetmask	69
-#define __NR_setreuid	70
-#define __NR_setregid	71
-#define __NR_iam		72 //我们增加的功能
-#define __NR_whoami		73
+#define __NR_ssetmask   69
+#define __NR_setreuid   70
+#define __NR_setregid   71
+#define __NR_iam        72 //我们增加的功能
+#define __NR_whoami     73
 </code></pre>
 
-这里需要注意在0.11环境下编译C程序，包含的头文件都在/usr/include目录下。该目录下的unistd.h是标准头文件。我们可以使用*sudo ./mount-hdc*挂载虚拟硬盘，具体请看 实验指导书-实验环境的搭建与使用-ubuntu与linux0.11之间的文件交换。
+<p>这里需要注意在0.11环境下编译C程序，包含的头文件都在/usr/include目录下。该目录下的unistd.h是标准头文件。我们可以使用*sudo ./mount-hdc*挂载虚拟硬盘，具体请看 实验指导书-实验环境的搭建与使用-ubuntu与linux0.11之间的文件交换。</p>
 
-2. 在*include/linux/sys.h* 声明函数并加入到*sys_call_table[]*中
+<ol>
+<li>在<em>include/linux/sys.h</em> 声明函数并加入到*sys_call_table[]*中</li>
+</ol>
 
 <pre><code>
 extern int sys_setregid();
@@ -153,7 +155,9 @@ sys_getpgrp, sys_setsid, sys_sigaction, sys_sgetmask, sys_ssetmask,
 sys_setreuid,sys_setregid,sys_iam,sys_whoami };
 </code></pre>
 
-3. 修改*kernel/sys_call.s*中的*nr_system_calls* 之前为72，改为74
+<ol>
+<li>修改<em>kernel/sys_call.s*中的*nr_system_calls</em> 之前为72，改为74</li>
+</ol>
 
 <pre><code>
 # offsets within sigaction
@@ -165,13 +169,13 @@ sa_restorer = 12
 nr_system_calls = 74
 </code></pre>
 
-4. 编写*kernel/who.c*,其中用两个系统调用iam()和whoami(), 这个按着要求来就行了，注意   #include __LIBRARY__  和 使用 get_fs_byte() put_fs_byte() 读取写入数据
+<ol>
+<li><p>编写<em>kernel/who.c</em>,其中用两个系统调用iam()和whoami(), 这个按着要求来就行了，注意   #include <strong>LIBRARY</strong>  和 使用 get_fs_byte() put_fs_byte() 读取写入数据</p></li>
 
+<li><p>修改makefile，使得who.c 会被编入内核</p></li>
 
-5. 修改makefile，使得who.c 会被编入内核
-
-
-6. 编写应用程序 iam.c whoami.c,这个也通过虚拟硬盘传到linux0.11
+<li><p>编写应用程序 iam.c whoami.c,这个也通过虚拟硬盘传到linux0.11</p></li>
+</ol>
 
 <pre><code>
 #define __LIBRARY__
@@ -182,16 +186,16 @@ nr_system_calls = 74
 _syscall1(int,iam,const char*,name)
 
 int main(int argc,char * args[]){
-	if(argc > 1){
-		if(iam(args[1]) < 0){
-			printf("SystemCall Exception!\n");
-			return -1;
-		}
-	}else{
-		printf("Input Exception!\n");
-		return -1;
-	}
-	return 0;
+    if(argc > 1){
+        if(iam(args[1]) < 0){
+            printf("SystemCall Exception!\n");
+            return -1;
+        }
+    }else{
+        printf("Input Exception!\n");
+        return -1;
+    }
+    return 0;
 }
 </code></pre>
 
@@ -205,39 +209,36 @@ int main(int argc,char * args[]){
 _syscall2(int,whoami,char*,name,unsigned int,size)
 
 int main(){
-	int count;
-	char name[30] = {0};
-	count = whoami(name,30);
-	if(count < 0){
-		printf("SystemCall Exception!\n");
-		return -1;
-	}else{
-		printf("%s\n",name);
-	}
-	return 0;
+    int count;
+    char name[30] = {0};
+    count = whoami(name,30);
+    if(count < 0){
+        printf("SystemCall Exception!\n");
+        return -1;
+    }else{
+        printf("%s\n",name);
+    }
+    return 0;
 }
 </code></pre>
 
-7. 使用提供的测试脚本进行测试
+<ol>
+<li>使用提供的测试脚本进行测试</li>
+</ol>
 
-##总结##
+<p>##总结##</p>
 
-好好看看实验指导书，只要理解了原理，做起来还是很简单的
+<p>好好看看实验指导书，只要理解了原理，做起来还是很简单的</p>
 
-具体代码请戳[https://github.com/pokerG/HIT-OS-Experiment/tree/syscall]("https://github.com/pokerG/HIT-OS-Experiment/tree/syscall")
-
-
-
-
-
+<p>具体代码请戳[https://github.com/pokerG/HIT-OS-Experiment/tree/syscall](&ldquo;https://github.com/pokerG/HIT-OS-Experiment/tree/syscall&rdquo;)</p>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
+            <li class="prev"><a href="/MachineLearning/K%E8%BF%91%E9%82%BB%E7%AE%97%E6%B3%95%E4%B9%8B%E5%B1%80%E9%83%A8%E6%95%8F%E6%84%9F%E5%93%88%E5%B8%8C/" title="K近邻算法之局部敏感哈希">&larr; Previous</a></li>
           
-            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>

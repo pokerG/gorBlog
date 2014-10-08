@@ -92,6 +92,34 @@
 
 
 <div class="post">
+  <h3 class="title"><a href="/MachineLearning/K%E8%BF%91%E9%82%BB%E7%AE%97%E6%B3%95%E4%B9%8B%E5%B1%80%E9%83%A8%E6%95%8F%E6%84%9F%E5%93%88%E5%B8%8C/">K近邻算法之局部敏感哈希</a> <span class="date">2014-10-08</span></h3>
+
+  <h1>问题背景</h1>
+
+<p>&emsp;&emsp;KNN 算法,即 K 最近邻算法,是模式识别中一种最基本的用于分类与回归的非参方法。</p>
+
+<p>&emsp;&emsp;KNN 算法的核心思想是如果一个样本在特征空间中的 K 个最相邻的样本中的大多数属于某一个类别,则该样本也属于这个类别,并具有这个类别上样本的特性。该方法在确定分类决策上只依据最邻近的一个或者几个样本的类别来决定待分样本所属的类别。 KNN 方法在类别决策时,只与极少量的相邻样本有关。由于 KNN 方法主要靠周围有限的邻近的样本,而不是靠判别类域的方法来确定所属类别的,因此对于类域的交叉或重叠较多的待分样本集
+来说,KNN 方法较其他方法更为适合。</p>
+
+<p>&emsp;&emsp;KNN 问题最主要的难点在于,在输入数据规模较大(N 较大)的情况下,朴素的线性查找算法变得难以接受。为此,学界主要提出两种不同的改进思路:空间划分和哈希。</p>
+
+<p>&emsp;&emsp;这里我们重点了解下局部敏感哈希。</p>
+
+<h1>局部敏感哈希</h1>
+
+<p>&emsp;&emsp;Indyk(1998) 最早提出了局部敏感哈希算法,为了解决所谓的“高维诅咒”给空间划分方法带来的优化难题。</p>
+
+<h2>&emsp;&emsp;1.基本原理</h2>
+
+<p>&emsp;&emsp;我们知道,通过建立 hash table 的方式我们能够得到 O(1)的查找时间性能,其中关键在于选取一个 hash function,将原始数据映射到相对应的桶内(bucket, hash bin),例如对数据求模:h = x mod w,w 通常为一个素数。在对数据集进行 hash 的过程中,会发生不同的数据被映射到了同一个桶中(即发生了冲突 collision),这一般通过再次哈希将数据映射到其他空桶内来解决。这是普通 hash 方法或者叫传统 hash 方法,其与 LSH 有些不同之处。</p>
+
+
+  <div class="more">
+    <a href="/MachineLearning/K%E8%BF%91%E9%82%BB%E7%AE%97%E6%B3%95%E4%B9%8B%E5%B1%80%E9%83%A8%E6%95%8F%E6%84%9F%E5%93%88%E5%B8%8C/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
   <h3 class="title"><a href="/OS/HITOSExperiment2-%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8/">HITOSExperiment2-系统调用</a> <span class="date">2014-09-28</span></h3>
 
   <p>##实验内容##</p>
@@ -325,30 +353,6 @@ func main() {
 
   <div class="more">
     <a href="/鬼谷子/%E6%8D%AD%E9%98%96--%E9%AC%BC%E8%B0%B7%E5%AD%90%E5%BC%80%E7%AF%87/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/Programming Language/Go%E7%AE%80%E5%8D%95%E7%9A%84%E4%B8%8B%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/">Go简单的下载器实现</a> <span class="date">2013-10-30</span></h3>
-
-  <p><p>&emsp;&emsp;用Go来实现下载功能还是很简单的。直接看代码吧</p></p>
-
-<pre><code>func download(url string){
-    resp,err := http.Get(url)
-    handleErr(err)
-    defer resp.Body.Close()
-    body,err := ioutil.ReadAll(resp.Body)
-    handleErr(err)
-    err := ioutil.WriteFile(&quot;./test&quot;,body,0666)
-    handleErr(err)
-}
-</code></pre>
-
-<p>&emsp;&emsp;核心部分就如此简单，剩下的就自己发挥啦。 比如断点续传什么的。</p>
-
-
-  <div class="more">
-    <a href="/Programming Language/Go%E7%AE%80%E5%8D%95%E7%9A%84%E4%B8%8B%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/" class="btn">read more..</a>
   </div>
 </div>
 
