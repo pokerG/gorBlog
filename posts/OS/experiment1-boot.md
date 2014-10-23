@@ -255,4 +255,4 @@ msg_hd0:
 
 &emsp;&emsp;总体来说，这个实验还是很简单的，很适合新手刚上来熟悉操作系统的修改，编译，调试
 
-整个修改代码请戳 [https://github.com/pokerG/HIT-OS-Experiment/tree/boot]("https://github.com/pokerG/HIT-OS-Experiment/tree/boot")
+整个修改代码请戳 [https://github.com/pokerG/HIT-OS-Experiment/tree/boot](https://github.com/pokerG/HIT-OS-Experiment/tree/boot)

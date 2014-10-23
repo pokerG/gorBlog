@@ -149,7 +149,7 @@ int main(){
 
 好好看看实验指导书，只要理解了原理，做起来还是很简单的
 
-具体代码请戳[https://github.com/pokerG/HIT-OS-Experiment/tree/syscall]("https://github.com/pokerG/HIT-OS-Experiment/tree/syscall")
+具体代码请戳[https://github.com/pokerG/HIT-OS-Experiment/tree/syscall](https://github.com/pokerG/HIT-OS-Experiment/tree/syscall)
 
 
 
