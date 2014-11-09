@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>HITOSExperiment4-信号量的实现和应用</title>
+  
+    <meta name="author" content="pokerG Hao">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/twitter/stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+ 
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+  </head>
+
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">pokerG</a>
+          <ul class="nav">
+            
+              
+
+
+  <li><a href="/archive">Archive</a></li>
+
+
+            
+              
+
+
+  <li><a href="/tags">Tags</a></li>
+
+
+            
+              
+
+
+  <li><a href="/categories">Categories</a></li>
+
+
+            
+              
+
+
+  <li><a href="/pages">Pages</a></li>
+
+
+            
+              
+
+
+  <li><a href="/about">About Me</a></li>
+
+
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <div class="page-header">
+  <h1>HITOSExperiment4-信号量的实现和应用  <small>&#34;&#34;</small></h1>
+</div>
+
+<div class="row">
+  <div class="span8">
+    <h1>实验内容</h1>
+
+<ol>
+<li>在Ubuntu下编写程序，用信号量解决生产者——消费者问题；</li>
+<li>在0.11中实现信号量，用生产者—消费者程序检验之。</li>
+</ol>
+
+<p>&emsp;&emsp;这个实验其实没啥好说的,说简单一点不简单,说难其实也就那么回事,(内核代码一遍过,也是让我惊呆了)</p>
+
+<p>&emsp;&emsp;就说说几个需要注意的地方吧,剩下的看指导书和代码就行了</p>
+
+<ol>
+<li><p>这个实验用到了实验二的东西,所以做之前建议复习下实验二</p></li>
+
+<li><p>写pc.c时,如果对缓冲区使用到in,out指针(自定义)的话,要注意out指针是由所有的消费者共享的,因为子进程继承父进程的全局变量是通过复制,所以子进程修改后的只对自己这一支有效,所以我们要想办法让所有进程共享相同的out指针,怎么做呢?我是通过把它写到缓冲区的第10个单元,每次消费者操作时先把它读出来,然后结束时把改变的out再写回去.</p></li>
+
+<li><p>内核代码最关键的是sem_t的结构怎么实现,下面是我的实现</p>
+
+<p><pre><code>
+/**</p>
+
+<ul>
+<li>in unistd.h<br /></li>
+<li>sem struct
+*/</li>
+</ul>
+
+<p>#define QUEUE_LIMIT 20
+#define SEM_NAME_LIMIT 20
+typedef struct sem_queue
+{<br />
+    int front,rear;
+    struct task_struct * task[QUEUE_LIMIT]; /<em>maybe linkedList better</em>/</p>
+
+<p>}sem_queue;</p>
+
+<p>typedef struct sem_t
+{
+    char name[SEM_NAME_LIMIT];
+    int value;
+    sem_queue wait_task;
+}sem_t;
+</code></pre></p></li>
+
+<li><p>确定结构后,就写那四个系统调用就行了,老李上课这部分也讲的挺详细的,就不赘述了,sem_post和sem_wait可以自己通过队列实现,也可以通过kernel本身的sleep_on和wake_up 不过这里要注意不能用if,具体原理看老李ppt.另外注意把一些错误处理什么的加上就好了</p></li>
+</ol>
+
+    <hr>
+    <div class="pagination">
+      <ul>
+        <ul>
+          
+          
+            <li class="prev disabled"><a>&larr; Previous</a></li>
+          
+
+            <li><a href="/archive">Archive</a></li>
+
+          
+            <li class="next"><a href="/OS/HITOSExperiment3-%E8%BF%9B%E7%A8%8B%E8%BF%90%E8%A1%8C%E8%BD%A8%E8%BF%B9%E7%9A%84%E8%B7%9F%E8%B8%AA%E4%B8%8E%E7%BB%9F%E8%AE%A1/" title="HITOSExperiment3-进程运行轨迹的跟踪与统计">Next &rarr;</a></li>
+          
+          
+        </ul>
+      </ul>
+    </div>
+    <hr>
+    
+<div id="disqus_thread"></div>
+<script>
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  </div>
+  
+  <div class="span4">
+    <h4>Published</h4>
+    <div class="date"><span>2014-11-09</span></div>
+    <br>
+    <h4>Categories</h4>
+    <ul class="tag_box">
+    
+      <li>
+  <a href="/categories/#OS-ref">OS <span>4</span></a>
+</li>
+    
+    </ul>
+    <br>
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    
+      <li>
+  <a href="/tags/#sem-ref">sem <span>1</span></a>
+</li>
+    
+    </ul>
+  </div>
+</div>
+
+      </div>
+
+      <footer>
+        <p>&copy; pokerG Hao 2013 
+          with help from <a href="http://github.com/wendal/gor" target="_blank" title="Gor -- Fast Blog">Gor</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+		  and Idea from <a href="http://ruhoh.com" target="_blank" title="The Definitive Technical Blogging Framework">ruhoh</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    
+<script src="//cdnjscn.b0.upaiyun.com/libs/prettify/r298/prettify.min.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  var pluginUrl = '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+  _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+  _gaq.push(['_setAccount', 'UA-123-12']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+  </body>
+</html>

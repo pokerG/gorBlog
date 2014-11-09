@@ -2,7 +2,13 @@
 <rss version="2.0">  <channel>
     <title>pokerG</title>
     <link>http://pokerg.github.io</link>
-    <pubDate>23 Oct 14 16:33 CST</pubDate>
+    <pubDate>09 Nov 14 16:16 CST</pubDate>
+    <item>
+      <title>HITOSExperiment4-信号量的实现和应用</title>
+      <link>http://pokerg.github.io/OS/HITOSExperiment4-%E4%BF%A1%E5%8F%B7%E9%87%8F%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%92%8C%E5%BA%94%E7%94%A8/</link>
+      <pubDate>2014-11-09 12:00:00 +0800</pubDate>
+      <description>&lt;h1&gt;实验内容&lt;/h1&gt;&#xA;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;在Ubuntu下编写程序，用信号量解决生产者——消费者问题；&lt;/li&gt;&#xA;&lt;li&gt;在0.11中实现信号量，用生产者—消费者程序检验之。&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&#xA;&lt;p&gt;&amp;emsp;&amp;emsp;这个实验其实没啥好说的,说简单一点不简单,说难其实也就那么回事,(内核代码一遍过,也是让我惊呆了)&lt;/p&gt;&#xA;&#xA;&lt;p&gt;&amp;emsp;&amp;emsp;就说说几个需要注意的地方吧,剩下的看指导书和代码就行了&lt;/p&gt;&#xA;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;p&gt;这个实验用到了实验二的东西,所以做之前建议复习下实验二&lt;/p&gt;&lt;/li&gt;&#xA;&#xA;&lt;li&gt;&lt;p&gt;写pc.c时,如果对缓冲区使用到in,out指针(自定义)的话,要注意out指针是由所有的消费者共享的,因为子进程继承父进程的全局变量是通过复制,所以子进程修改后的只对自己这一支有效,所以我们要想办法让所有进程共享相同的out指针,怎么做呢?我是通过把它写到缓冲区的第10个单元,每次消费者操作时先把它读出来,然后结束时把改变的out再写回去.&lt;/p&gt;&lt;/li&gt;&#xA;&#xA;&lt;li&gt;&lt;p&gt;内核代码最关键的是sem_t的结构怎么实现,下面是我的实现&lt;/p&gt;&#xA;&#xA;&lt;p&gt;&lt;pre&gt;&lt;code&gt;&#xA;/**&lt;/p&gt;&#xA;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;in unistd.h&lt;br /&gt;&lt;/li&gt;&#xA;&lt;li&gt;sem struct&#xA;*/&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&#xA;&lt;p&gt;#define QUEUE_LIMIT 20&#xA;#define SEM_NAME_LIMIT 20&#xA;typedef struct sem_queue&#xA;{&lt;br /&gt;&#xA;    int front,rear;&#xA;    struct task_struct * task[QUEUE_LIMIT]; /&lt;em&gt;maybe linkedList better&lt;/em&gt;/&lt;/p&gt;&#xA;&#xA;&lt;p&gt;}sem_queue;&lt;/p&gt;&#xA;&#xA;&lt;p&gt;typedef struct sem_t&#xA;{&#xA;    char name[SEM_NAME_LIMIT];&#xA;    int value;&#xA;    sem_queue wait_task;&#xA;}sem_t;&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;&#xA;&#xA;&lt;li&gt;&lt;p&gt;确定结构后,就写那四个系统调用就行了,老李上课这部分也讲的挺详细的,就不赘述了,sem_post和sem_wait可以自己通过队列实现,也可以通过kernel本身的sleep_on和wake_up 不过这里要注意不能用if,具体原理看老李ppt.另外注意把一些错误处理什么的加上就好了&lt;/p&gt;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;</description>
+    </item>
     <item>
       <title>HITOSExperiment3-进程运行轨迹的跟踪与统计</title>
       <link>http://pokerg.github.io/OS/HITOSExperiment3-%E8%BF%9B%E7%A8%8B%E8%BF%90%E8%A1%8C%E8%BD%A8%E8%BF%B9%E7%9A%84%E8%B7%9F%E8%B8%AA%E4%B8%8E%E7%BB%9F%E8%AE%A1/</link>
