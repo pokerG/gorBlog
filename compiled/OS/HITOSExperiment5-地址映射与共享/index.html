@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>HITOSExperiment4-信号量的实现和应用</title>
+    <title>HITOSExperiment5-地址映射与共享</title>
   
     <meta name="author" content="pokerG Hao">
 
@@ -78,7 +78,7 @@
 
       <div class="content">
         <div class="page-header">
-  <h1>HITOSExperiment4-信号量的实现和应用  <small>&#34;&#34;</small></h1>
+  <h1>HITOSExperiment5-地址映射与共享  <small>&#34;&#34;</small></h1>
 </div>
 
 <div class="row">
@@ -86,65 +86,42 @@
     <h1>实验内容</h1>
 
 <ol>
-<li>在Ubuntu下编写程序，用信号量解决生产者——消费者问题；</li>
-<li>在0.11中实现信号量，用生产者—消费者程序检验之。</li>
+<li>用Bochs调试工具跟踪Linux 0.11的地址翻译（地址映射）过程，了解IA-32和Linux 0.11的内存管理机制；</li>
+<li>在Ubuntu上编写多进程的生产者—消费者程序，用共享内存做缓冲区；</li>
+<li>在信号量实验的基础上，为Linux 0.11增加共享内存功能，并将生产者—消费者程序移植到Linux 0.11。</li>
 </ol>
 
-<p>&emsp;&emsp;这个实验其实没啥好说的,说简单一点不简单,说难其实也就那么回事,(内核代码一遍过,也是让我惊呆了)</p>
+<p>这次实验用到了实验4的代码,然后再加上两个系统调用</p>
 
-<p>&emsp;&emsp;就说说几个需要注意的地方吧,剩下的看指导书和代码就行了</p>
+<p>shmget的参数key和size就够了,不需要shmflag</p>
 
-<ol>
-<li><p>这个实验用到了实验二的东西,所以做之前建议复习下实验二</p></li>
+<p>shmat的参数shmid就可以</p>
 
-<li><p>写pc.c时,如果对缓冲区使用到in,out指针(自定义)的话,要注意out指针是由所有的消费者共享的,因为子进程继承父进程的全局变量是通过复制,所以子进程修改后的只对自己这一支有效,所以我们要想办法让所有进程共享相同的out指针,怎么做呢?我是通过把它写到缓冲区的第10个单元,每次消费者操作时先把它读出来,然后结束时把改变的out再写回去.</p></li>
+<p>因为shm.c是在mm里写的,所以要改mm/makefile,改法和kernel里的一样</p>
 
-<li><p>内核代码最关键的是sem_t的结构怎么实现,下面是我的实现</p>
+<p>shmget的关键是get_free_page</p>
 
-<p><pre><code>
-/**</p>
+<p>shmat的关键是put_page,用从shmget中得到的物理地址和线性地址建立映射,具体请看虚拟内存的相关内容,</p>
 
-<ul>
-<li>in unistd.h<br /></li>
-<li>sem struct
-*/</li>
-</ul>
+<p>正常来说我们还需要写shmdt来释放共享内存 ,进程结束时，系统会自动检测进程中映射的共享内存并释放该映射，并将mam_map[]减一。 因为实验没要求,所以这里我们要改下mm/memory.c,把释放内存时的panic注释掉.</p>
 
-<p>#define QUEUE_LIMIT 20
-#define SEM_NAME_LIMIT 20
-typedef struct sem_queue
-{<br />
-    int front,rear;
-    struct task_struct * task[QUEUE_LIMIT]; /<em>maybe linkedList better</em>/</p>
+<p>剩下的就没什么了</p>
 
-<p>}sem_queue;</p>
-
-<p>typedef struct sem_t
-{
-    char name[SEM_NAME_LIMIT];
-    int value;
-    sem_queue wait_task;
-}sem_t;
-</code></pre></p></li>
-
-<li><p>确定结构后,就写那四个系统调用就行了,老李上课这部分也讲的挺详细的,就不赘述了,sem_post和sem_wait可以自己通过队列实现,也可以通过kernel本身的sleep_on和wake_up 不过这里要注意不能用if,具体原理看老李ppt.另外注意把一些错误处理什么的加上就好了</p></li>
-</ol>
-
-<p>具体代码请戳<a href="https://github.com/pokerG/HIT-OS-Experiment/tree/Sem">https://github.com/pokerG/HIT-OS-Experiment/tree/Sem</a></p>
+<p>具体代码请戳<a href="https://github.com/pokerG/HIT-OS-Experiment/tree/shm">https://github.com/pokerG/HIT-OS-Experiment/tree/shm</a></p>
 
     <hr>
     <div class="pagination">
       <ul>
         <ul>
           
-            <li class="prev"><a href="/OS/HITOSExperiment5-%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84%E4%B8%8E%E5%85%B1%E4%BA%AB/" title="HITOSExperiment5-地址映射与共享">&larr; Previous</a></li>
           
+            <li class="prev disabled"><a>&larr; Previous</a></li>
           
 
             <li><a href="/archive">Archive</a></li>
 
           
-            <li class="next"><a href="/OS/HITOSExperiment3-%E8%BF%9B%E7%A8%8B%E8%BF%90%E8%A1%8C%E8%BD%A8%E8%BF%B9%E7%9A%84%E8%B7%9F%E8%B8%AA%E4%B8%8E%E7%BB%9F%E8%AE%A1/" title="HITOSExperiment3-进程运行轨迹的跟踪与统计">Next &rarr;</a></li>
+            <li class="next"><a href="/OS/HITOSExperiment4-%E4%BF%A1%E5%8F%B7%E9%87%8F%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%92%8C%E5%BA%94%E7%94%A8/" title="HITOSExperiment4-信号量的实现和应用">Next &rarr;</a></li>
           
           
         </ul>
@@ -170,7 +147,7 @@ typedef struct sem_queue
   
   <div class="span4">
     <h4>Published</h4>
-    <div class="date"><span>2014-11-09</span></div>
+    <div class="date"><span>2014-11-16</span></div>
     <br>
     <h4>Categories</h4>
     <ul class="tag_box">
@@ -185,7 +162,7 @@ typedef struct sem_queue
     <ul class="tag_box">
     
       <li>
-  <a href="/tags/#sem-ref">sem <span>1</span></a>
+  <a href="/tags/#shm-ref">shm <span>1</span></a>
 </li>
     
     </ul>

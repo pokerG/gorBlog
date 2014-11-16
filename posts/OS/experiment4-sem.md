@@ -50,3 +50,5 @@ tags:
     
 4. 确定结构后,就写那四个系统调用就行了,老李上课这部分也讲的挺详细的,就不赘述了,sem_post和sem_wait可以自己通过队列实现,也可以通过kernel本身的sleep_on和wake_up 不过这里要注意不能用if,具体原理看老李ppt.另外注意把一些错误处理什么的加上就好了
 
+
+具体代码请戳[https://github.com/pokerG/HIT-OS-Experiment/tree/Sem](https://github.com/pokerG/HIT-OS-Experiment/tree/Sem)
