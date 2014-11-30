@@ -2,7 +2,13 @@
 <rss version="2.0">  <channel>
     <title>pokerG</title>
     <link>http://pokerg.github.io</link>
-    <pubDate>16 Nov 14 10:57 CST</pubDate>
+    <pubDate>30 Nov 14 17:58 CST</pubDate>
+    <item>
+      <title>HITOSExperiment7-proc文件系统的实现</title>
+      <link>http://pokerg.github.io/OS/HITOSExperiment7-proc%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>2014-11-30 12:00:00 +0800</pubDate>
+      <description>&lt;h1&gt;实验内容&lt;/h1&gt;&#xA;&#xA;&lt;p&gt;在Linux 0.11上实现procfs（proc文件系统）内的psinfo结点。当读取此结点的内容时，可得到系统当前所有进程的状态信息。例如，用cat命令显示/proc/psinfo的内容，可得到：&lt;/p&gt;&#xA;&#xA;&lt;p&gt;&lt;pre&gt;&lt;code&gt;&#xA;# cat /proc/psinfo&#xA;pid    state    father  counter start_time&#xA;0   1   -1  0   0&#xA;1   1   0   28  1&#xA;4   1   1   1   73&#xA;3   1   1   27  63&#xA;6   0   4   12  817&#xA;# cat /proc/hdinfo&#xA;total_blocks:62000;&#xA;free_blocks:39037;&#xA;used_blocks:22963;&#xA;total_inodes:20666;&#xA;&amp;hellip;&#xA;#cat /prco/inodeinfo&#xA;inr:1;zone[0]:659&#xA;inr:2;zone[0]:xxxx&#xA;&amp;hellip;&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;procfs及其结点要在内核启动时自动创建。相关功能实现在fs/proc.c文件内。&lt;/p&gt;&#xA;&#xA;&lt;p&gt;跟着实验指导书一步步来,第一个psinfo应该没啥问题,重点是后面两个&lt;/p&gt;&#xA;&#xA;&lt;p&gt;###hdinfo&lt;/p&gt;&#xA;&#xA;&lt;p&gt;首先要获得super_block,使用get_super(),这里的参数可以用proc_read加一个参数idev 使用inode-&amp;gt;i_dev;或者也可以直接使用ROOT_DEV;&lt;/p&gt;&#xA;&#xA;&lt;p&gt;super_block的结构在include/linux/fs.h里定义,这里就不细说了,Linux内核完全剖析里也有.&lt;/p&gt;&#xA;&#xA;&lt;p&gt;其中有个s_zamp[i] 是buffer_head结构,也在fs.h里定义, total_blocks和total_inodes都好说直接在super_block里就有,而free_blocks等必须通过位运算累加获得.&lt;/p&gt;&#xA;&#xA;&lt;p&gt;这里还要注意判断操作过的位数是否和total_blocks相等,相等则跳出.另外位图中的第一位是不算的,这里在剖析书里有介绍,&lt;em&gt;强烈建议做这个之前好好看看书&lt;/em&gt;.&lt;/p&gt;&#xA;&#xA;&lt;p&gt;###inodeinfo&lt;/p&gt;&#xA;&#xA;&lt;p&gt;这个老师的要求是打印出一部分就行了,所以不难,但是如果超过二三十就可能报错,不过不影响结论,你打印10来个就行了,要是想打印更多的话就得想办法,这里就不细讲了,自己看代码吧.&lt;/p&gt;&#xA;&#xA;&lt;p&gt;具体代码请戳&lt;a href=&#34;https://github.com/pokerG/HIT-OS-Experiment/tree/proc&#34;&gt;https://github.com/pokerG/HIT-OS-Experiment/tree/proc&lt;/a&gt;&lt;/p&gt;&#xA;</description>
+    </item>
     <item>
       <title>HITOSExperiment5-地址映射与共享</title>
       <link>http://pokerg.github.io/OS/HITOSExperiment5-%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84%E4%B8%8E%E5%85%B1%E4%BA%AB/</link>
