@@ -92,6 +92,35 @@
 
 
 <div class="post">
+  <h3 class="title"><a href="/gRPC/Android-gRPC-protobuf%E7%9A%84compile%26generate%E9%97%AE%E9%A2%98/">Android gRPC protobuf的compile&amp;generate问题</a> <span class="date">2015-03-13</span></h3>
+
+  <p>Android上使用gRPC时，proto的compile和generate不能用java的方法，要用javanano的，而在文档中并没有给出具体的  command line</p>
+
+<p>我找了很久终于发现了一种方法</p>
+
+<p>先用</p>
+
+<pre><code>protoc --proto_path=&quot;IMPORT_PATH&quot; --javanano_out=ignore_services=true:&quot;DST_DIR&quot; &quot;path/to/file.proto&quot;    
+</code></pre>
+
+<p>生成 file.java 这是proto的类文件</p>
+
+<p>再用(这里假设你在grpc-java的根目录下）</p>
+
+<pre><code>protoc --plugin=protoc-gen-java_rpc=compiler/build/binaries/java_pluginExecutable/java_plugin --java_rpc_out=nano=true:&quot;$OUTPUT_FILE&quot; --proto_path=&quot;$DIR_OF_PROTO_FILE&quot; &quot;$PROTO_FILE&quot;
+</code></pre>
+
+<p>生成xxxGrpc.java 这是用于Client的interfaces</p>
+
+<p>也可以将这两个合起来使用(&ldquo;&ldquo;中为自己规定）</p>
+
+
+  <div class="more">
+    <a href="/gRPC/Android-gRPC-protobuf%E7%9A%84compile%26generate%E9%97%AE%E9%A2%98/" class="btn">read more..</a>
+  </div>
+</div>
+
+<div class="post">
   <h3 class="title"><a href="/OS/HITOSExperiment7-proc%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%9E%E7%8E%B0/">HITOSExperiment7-proc文件系统的实现</a> <span class="date">2014-11-30</span></h3>
 
   <h1>实验内容</h1>
@@ -347,25 +376,6 @@ procfs及其结点要在内核启动时自动创建。相关功能实现在fs/pr
 
   <div class="more">
     <a href="/阴符经/%E9%98%B4%E7%AC%A6%E7%BB%8F%E5%85%A8%E6%96%87/" class="btn">read more..</a>
-  </div>
-</div>
-
-<div class="post">
-  <h3 class="title"><a href="/鬼谷子/%E5%86%85%E6%A5%97--%E9%AC%BC%E8%B0%B7%E5%AD%90%E7%AC%AC%E4%B8%89%E7%AF%87/">内楗--鬼谷子第三篇</a> <span class="date">2013-11-23</span></h3>
-
-  <p>&emsp;&emsp;“内”即使让人采取自己的计策,&ldquo;楗“就是设法坚持自己的计策，”内楗“连在一起，就是内心思想相合。</p>
-
-<p>&emsp;&emsp;人们之间可能距离很近，但是关系却很疏远，而距离很远，关系却可能很亲密，这是应为内心相知程度的不同所致。这都源于平时的结交。把握住对方的心理，就可以”若蚨母之从子也，出无间，入无朕“。所以说内楗术的核心就是把握对方的心理。内楗术是关于献策的方法，虽然文中大多数都是向君主，我们现在可能不存在这个问题，但是让人心悦诚服的接受我们的意见这点来说，内楗术还是非常有用的。</p>
-
-<p>&emsp;&emsp;“欲说者务隐度，计事者务循顺”，想要游说的话，务必要先揣度对方的心理；准备献策的，务必因势利导，顺其自然。“事有不合者，圣人不为谋也”这点一定要切记。</p>
-
-<p>&emsp;&emsp;&ldquo;得其情乃制其术“一定要在了解情况后再确定方法。</p>
-
-<p>&emsp;&emsp;最后讲的是进退之道，关键还是要“莫知所为”，才行。</p>
-
-
-  <div class="more">
-    <a href="/鬼谷子/%E5%86%85%E6%A5%97--%E9%AC%BC%E8%B0%B7%E5%AD%90%E7%AC%AC%E4%B8%89%E7%AF%87/" class="btn">read more..</a>
   </div>
 </div>
 
